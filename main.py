@@ -38,13 +38,13 @@ def main():
             print("Dengue panel selected")
 
             dropdown = frame_locator.locator("div.slicer-dropdown-menu[aria-label='UF']")
-            dropdown.wait_for(state="visible", timeout=10000)
+            dropdown.wait_for(state="visible", timeout=500)
             dropdown.click()
             print("UF dropdown opened")
 
             dropdown_manager = DropdownManager(frame_locator, "div.slicer-dropdown-menu[aria-label='UF']")
             dropdown_manager.ensure_open()
-            page.wait_for_timeout(1000)
+            page.wait_for_timeout(500)
 
             uf_data = {}
             processed_ufs = set()  # Track processed UFs to avoid duplicates
@@ -87,11 +87,11 @@ def main():
 
                     # Uncheck the UF
                     dropdown_manager.ensure_open()
-                    page.wait_for_timeout(1000)
+                    page.wait_for_timeout(500)
                     item.scroll_into_view_if_needed()
                     item.wait_for(state="visible", timeout=5000)
                     item.click(delay=100)
-                    page.wait_for_timeout(1000)
+                    page.wait_for_timeout(500)
                     print(f"Unchecked UF: {uf_name}")
 
                     # Mark UF as processed
