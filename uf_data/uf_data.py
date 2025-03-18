@@ -11,11 +11,10 @@ class DropdownManager:
         if self.dropdown.get_attribute("aria-expanded") != "true":
             self.dropdown.click(delay=100)
             self.frame_locator.locator("div.slicer-dropdown-popup").wait_for(state="visible", timeout=timeout)
-        print("Dropdown confirmed open")
 
 def main():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto("https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/a/aedes-aegypti/monitoramento-das-arboviroses")
         
@@ -38,7 +37,7 @@ def main():
             print("Dengue panel selected")
 
             dropdown = frame_locator.locator("div.slicer-dropdown-menu[aria-label='UF']")
-            dropdown.wait_for(state="visible", timeout=500)
+            dropdown.wait_for(state="visible", timeout=5000)
             dropdown.click()
             print("UF dropdown opened")
 
@@ -61,13 +60,13 @@ def main():
 
                 for uf_name in new_ufs:
                     # Reopen dropdown to ensure it's visible
-                    page.wait_for_timeout(500)
+                    page.wait_for_timeout(2000)
 
                     # Locate the UF item by its title
                     item = frame_locator.locator(f"div.slicerItemContainer[title='{uf_name}']")
                     item.scroll_into_view_if_needed()
                     item.wait_for(state="visible", timeout=5000)
-                    item.click(delay=100)
+                    item.click()
                     page.wait_for_timeout(500)
                     print(f"Checked UF: {uf_name}")
 
@@ -83,29 +82,17 @@ def main():
                             label = aria_label.replace(value, "").strip(" .").replace(" - DENV", "")
                             if "Letalidade (óbito)" not in label:
                                 uf_data[uf_name][label] = value
-                                print(f"  {label}: {value}")
+
 
                     # Uncheck the UF
                     dropdown_manager.ensure_open()
-                    page.wait_for_timeout(500)
                     item.scroll_into_view_if_needed()
                     item.wait_for(state="visible", timeout=5000)
-                    item.click(delay=100)
-                    page.wait_for_timeout(500)
-                    print(f"Unchecked UF: {uf_name}")
+                    item.click()
+
 
                     # Mark UF as processed
                     processed_ufs.add(uf_name)
-
-                # Scroll down 31px using the scroll bar
-                scroll_bar = frame_locator.locator("#slicer-dropdown-popup-698f59d6-c05d-2511-5083-d0c85cc285fd div.scroll-y div.scroll-bar")
-                if scroll_bar.is_visible():
-                    current_position = int(scroll_bar.evaluate("element => parseFloat(element.style.top)"))
-                    new_position = current_position + 31
-                    scroll_bar.evaluate(f"(element, newPos) => element.style.top = newPos + 'px'", new_position)
-                    print(f"Scrolled down to {new_position}px")
-                else:
-                    print("Scroll bar not found")
 
             # Save extracted data to a YAML file
             with open("dengue_uf_data.yaml", "w", encoding="utf-8") as f:
