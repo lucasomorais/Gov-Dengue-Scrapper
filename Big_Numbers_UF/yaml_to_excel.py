@@ -101,4 +101,4 @@ def yaml_to_excel_with_exact_formatting(yaml_file, excel_file):
     print(f"Excel file saved to {excel_file}")
 
 # Example usage
-yaml_to_excel_with_exact_formatting("dengue_uf_data.yaml", "epidemiology_uf_data.xlsx")
+yaml_to_excel_with_exact_formatting("Big_Numbers_UF/output/dengue_uf_data.yaml", "results/Big_Numbers_UF.xlsx")

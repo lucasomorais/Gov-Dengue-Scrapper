@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright, TimeoutError
 import yaml
+import time
 
 class DropdownManager:
     def __init__(self, frame_locator, dropdown_selector):
@@ -14,7 +15,7 @@ class DropdownManager:
 
 def main():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)  # Run in non-headless mode for debugging
         page = browser.new_page()
         page.goto("https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/a/aedes-aegypti/monitoramento-das-arboviroses")
         
@@ -60,18 +61,24 @@ def main():
 
                 for uf_name in new_ufs:
                     # Reopen dropdown to ensure it's visible
-                    page.wait_for_timeout(2000)
+                    dropdown_manager.ensure_open()
+                    page.wait_for_timeout(1000)  # Wait for dropdown to fully open
 
                     # Locate the UF item by its title
                     item = frame_locator.locator(f"div.slicerItemContainer[title='{uf_name}']")
                     item.scroll_into_view_if_needed()
                     item.wait_for(state="visible", timeout=5000)
-                    item.click()
-                    page.wait_for_timeout(500)
-                    print(f"Checked UF: {uf_name}")
+
+                    # Ensure only this UF is selected
+                    if item.get_attribute("aria-selected") != "true":
+                        item.click()
+                        print(f"Checked UF: {uf_name}")
+
+                    # Wait for the UI to update
+                    time.sleep(3)  # Fixed delay to ensure UI updates
+                    frame_locator.locator("svg.card").first.wait_for(state="visible", timeout=15000)
 
                     # Fetch data
-                    frame_locator.locator("svg.card").first.wait_for(state="visible", timeout=15000)
                     svg_cards = frame_locator.locator("svg.card").all()
                     uf_data[uf_name] = {}
 
@@ -83,19 +90,20 @@ def main():
                             if "Letalidade (óbito)" not in label:
                                 uf_data[uf_name][label] = value
 
-
                     # Uncheck the UF
                     dropdown_manager.ensure_open()
                     item.scroll_into_view_if_needed()
                     item.wait_for(state="visible", timeout=5000)
                     item.click()
 
+                    # Wait for the UI to reset
+                    page.wait_for_timeout(1000)
 
                     # Mark UF as processed
                     processed_ufs.add(uf_name)
 
             # Save extracted data to a YAML file
-            with open("dengue_uf_data.yaml", "w", encoding="utf-8") as f:
+            with open("Big_Numbers_UF/output/dengue_uf_data.yaml", "w", encoding="utf-8") as f:
                 yaml.dump(uf_data, f, allow_unicode=True, default_flow_style=False)
             print("Data saved to dengue_uf_data.yaml")
 

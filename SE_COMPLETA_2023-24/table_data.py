@@ -2,10 +2,24 @@ import pyperclip
 import csv
 from playwright.sync_api import sync_playwright
 
+def parse_copied_data(header, raw_data):
+    """Parse the copied data into separate columns"""
+    lines = raw_data.strip().split('\n')
+    parsed_data = []
+    
+    for line in lines[1:]:
+        parts = line.split('\t')
+        if len(parts) >= 4:
+            uf = parts[1]
+            ano_semana = header
+            casos = parts[3].replace(',', '')
+            parsed_data.append([uf, ano_semana, casos])
+    
+    return parsed_data
+
 def main():
     with sync_playwright() as p:
-        # Launch the browser
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)  # Coloque False para depurar visualmente
         context = browser.new_context(
             viewport={"width": 1912, "height": 920},
             device_scale_factor=1,
@@ -14,31 +28,24 @@ def main():
         )
         page = context.new_page()
 
-        # List to store all copied data
         all_data = []
 
         try:
-            # Navigate to the Power BI URL
             page.goto(
                 "https://app.powerbi.com/view?r=eyJrIjoiYzQyOTI4M2ItZTQwMC00ODg4LWJiNTQtODc5MzljNWIzYzg3IiwidCI6IjlhNTU0YWQzLWI1MmItNDg2Mi1hMzZmLTg0ZDg5MWU1YzcwNSJ9&pageName=ReportSectionbd7616200acb303571fc",
                 wait_until="networkidle"
             )
 
-            # Wait for the element to be present and click it
             element = page.wait_for_selector("visual-container:nth-of-type(1) g.tile > path", state="visible")
             element.click(position={"x": 241, "y": 113})
-
             print("Element clicked successfully!")
 
-            # Right-click on the column header "/01" and select "Show as a table"
             page.get_by_role("columnheader", name="/01").click(button="right")
             page.get_by_test_id("pbimenu-item.Show as a table").click()
 
-            # Target the correct horizontal scroll bar
             scroll_bar = page.locator(".pivotTable > div:nth-child(7) > .scroll-bar-part-bar").first
             scroll_bar.scroll_into_view_if_needed()
 
-            # Initialize tracking variables
             column_headers = page.get_by_role("columnheader")
             processed_headers = set()
             scroll_iterations = 0
@@ -64,15 +71,18 @@ def main():
                     
                     copy_selection_button = page.locator('button[role="menuitem"][data-testid="pbimenu-item.Copy selection"][title="Copy selection"]')
                     copy_selection_button.click()
-                    
+
+                    page.wait_for_timeout(500)  # Tempo para garantir que os dados sejam copiados
+
                     header_text = header.text_content()
                     processed_headers.add(header_text)
                     
-                    # Only add to all_data if not "Total"
                     if header_text.strip() != "Total":
-                        copied_data = pyperclip.paste()
-                        all_data.append([header_text, copied_data])
-                        print(f"Copied selection from header '{header_text}' (iteration {scroll_iterations + 1})")
+                        copied_data = pyperclip.paste()  # Agora usando pyperclip
+                        
+                        parsed_rows = parse_copied_data(header_text, copied_data)
+                        all_data.extend(parsed_rows)
+                        print(f"Copied and parsed selection from header '{header_text}' (iteration {scroll_iterations + 1})")
                     else:
                         print(f"Copied selection from header '{header_text}' (iteration {scroll_iterations + 1}) - excluded from output")
                         print("Found 'Total' header. Ending application.")
@@ -102,16 +112,12 @@ def main():
 
             print(f"Completed: Processed {len(processed_headers)} headers across {scroll_iterations} scrolls (excluded 'Total' from output).")
 
-            # Save to CSV
-            with open("powerbi_data.csv", "w", newline="", encoding="utf-8") as f:
+            with open("table_data/output/SE_COMPLETA_2023-24.csv", "w", newline="", encoding="utf-8") as f:
                 writer = csv.writer(f)
-                writer.writerow(["Header", "Data"])
+                writer.writerow(["UF", "Ano/Semana", "Casos prováveis de Dengue"])
                 writer.writerows(all_data)
 
-            print("Data saved to 'powerbi_data.csv'.")
-
-            # Pause for debugging (optional)
-            page.pause()
+            print("Data saved to 'SE_COMPLETA_2023-24' with separate columns.")
 
         except Exception as e:
             print(f"An error occurred: {e}")
