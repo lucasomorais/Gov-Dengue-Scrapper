@@ -1,3 +1,5 @@
+import pyperclip
+import csv
 from playwright.sync_api import sync_playwright
 
 def main():
@@ -11,6 +13,9 @@ def main():
             has_touch=False
         )
         page = context.new_page()
+
+        # List to store all copied data
+        all_data = []
 
         try:
             # Navigate to the Power BI URL
@@ -35,72 +40,75 @@ def main():
 
             # Initialize tracking variables
             column_headers = page.get_by_role("columnheader")
-            processed_headers = set()  # Track processed headers by text content
+            processed_headers = set()
             scroll_iterations = 0
-            last_scroll_x = None  # Track scroll bar position
+            last_scroll_x = None
 
             while True:
-                # Get all currently visible headers
                 headers = column_headers.all()
                 if not headers:
                     print("No headers found.")
                     break
 
-                # Skip the first header ("REGIÃO") and process up to 5 new headers
                 new_headers = [h for i, h in enumerate(headers) if i > 0 and h.text_content() not in processed_headers]
                 if not new_headers:
                     print("No new headers to process after scrolling. Reached the end of the table.")
                     break
 
-                # Process up to 5 new headers
+                should_break = False
                 for i, header in enumerate(new_headers[:5]):
                     header.click(button="right")
                     
-                    # Hover over "Copy" button
                     copy_button = page.locator('button[role="menuitem"][title="Copy"].pbi-menu-trigger')
                     copy_button.hover()
                     
-                    # Click "Copy Selection"
                     copy_selection_button = page.locator('button[role="menuitem"][data-testid="pbimenu-item.Copy selection"][title="Copy selection"]')
                     copy_selection_button.click()
                     
                     header_text = header.text_content()
                     processed_headers.add(header_text)
-                    print(f"Copied selection from header '{header_text}' (iteration {scroll_iterations + 1})")
-
-                    # Check if we just processed "Total"
-                    if header_text.strip() == "Total":
+                    
+                    # Only add to all_data if not "Total"
+                    if header_text.strip() != "Total":
+                        copied_data = pyperclip.paste()
+                        all_data.append([header_text, copied_data])
+                        print(f"Copied selection from header '{header_text}' (iteration {scroll_iterations + 1})")
+                    else:
+                        print(f"Copied selection from header '{header_text}' (iteration {scroll_iterations + 1}) - excluded from output")
                         print("Found 'Total' header. Ending application.")
-                        break  # Exit the inner loop
+                        should_break = True
+                        break
 
-                # If we broke out of the inner loop due to "Total", exit the outer loop too
-                if "Total" in processed_headers:
+                if should_break:
                     break
 
-                # Move the horizontal scroll bar to the right
                 box = scroll_bar.bounding_box()
                 if box:
                     if last_scroll_x is None:
-                        # First scroll: start from center
                         start_x = box['x'] + box['width'] / 2
                     else:
-                        # Continue from last position
                         start_x = last_scroll_x
                     
                     page.mouse.move(start_x, box['y'] + box['height'] / 2)
                     page.mouse.down()
-                    new_x = start_x + 145  # Move 100 pixels right
+                    new_x = start_x + 142
                     page.mouse.move(new_x, box['y'] + box['height'] / 2)
                     page.mouse.up()
-                    last_scroll_x = new_x  # Update last scroll position
+                    last_scroll_x = new_x
                     print(f"Scrolled horizontally to x={last_scroll_x} (iteration {scroll_iterations + 1})")
                 
                 scroll_iterations += 1
-
-                # Small delay to allow UI to update
                 page.wait_for_timeout(1000)
 
-            print(f"Completed: Processed {len(processed_headers)} headers across {scroll_iterations} scrolls.")
+            print(f"Completed: Processed {len(processed_headers)} headers across {scroll_iterations} scrolls (excluded 'Total' from output).")
+
+            # Save to CSV
+            with open("powerbi_data.csv", "w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                writer.writerow(["Header", "Data"])
+                writer.writerows(all_data)
+
+            print("Data saved to 'powerbi_data.csv'.")
 
             # Pause for debugging (optional)
             page.pause()
@@ -108,7 +116,6 @@ def main():
         except Exception as e:
             print(f"An error occurred: {e}")
         finally:
-            # Close the browser
             context.close()
             browser.close()
 
