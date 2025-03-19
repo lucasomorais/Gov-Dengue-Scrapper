@@ -92,7 +92,7 @@ def main():
                 # Save data to YAML
                 with open("Semana_Epidemiologica/output/SE-Y.yaml", "w", encoding="utf-8") as f:
                     yaml.dump(sem_data, f, allow_unicode=True, default_flow_style=False)
-                print("Data saved to dengue_sem_data.yaml")
+                print("Data saved to SE-Y.yaml")
 
             else:
                 print("No last element identified within iteration limit.")
