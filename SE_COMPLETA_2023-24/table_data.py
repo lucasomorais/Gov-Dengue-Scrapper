@@ -1,25 +1,21 @@
-import pyperclip
 import csv
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, TimeoutError
 
-def parse_copied_data(header, raw_data):
-    """Parse the copied data into separate columns"""
-    lines = raw_data.strip().split('\n')
+def parse_column_data(header, column_cells):
+    """Parse the column data directly from DOM elements"""
     parsed_data = []
-    
-    for line in lines[1:]:
-        parts = line.split('\t')
-        if len(parts) >= 4:
-            uf = parts[1]
+    for cell in column_cells:
+        parts = cell.split('\t') if '\t' in cell else [cell]  # Fallback for single-value cells
+        if len(parts) >= 1:  # Adjust based on actual cell content structure
+            uf = parts[0] if parts[0] else "N/A"  # Assuming UF is in the first column
             ano_semana = header
-            casos = parts[3].replace(',', '')
+            casos = parts[-1].replace(',', '') if len(parts) > 1 else "0"  # Last value as casos
             parsed_data.append([uf, ano_semana, casos])
-    
     return parsed_data
 
 def main():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  # Coloque False para depurar visualmente
+        browser = p.chromium.launch(headless=False)
         context = browser.new_context(
             viewport={"width": 1912, "height": 920},
             device_scale_factor=1,
@@ -33,15 +29,22 @@ def main():
         try:
             page.goto(
                 "https://app.powerbi.com/view?r=eyJrIjoiYzQyOTI4M2ItZTQwMC00ODg4LWJiNTQtODc5MzljNWIzYzg3IiwidCI6IjlhNTU0YWQzLWI1MmItNDg2Mi1hMzZmLTg0ZDg5MWU1YzcwNSJ9&pageName=ReportSectionbd7616200acb303571fc",
-                wait_until="networkidle"
+                wait_until="domcontentloaded",
+                timeout=60000
             )
 
-            element = page.wait_for_selector("visual-container:nth-of-type(1) g.tile > path", state="visible")
+            element = page.wait_for_selector(
+                "visual-container:nth-of-type(1) g.tile > path",
+                state="visible",
+                timeout=30000
+            )
             element.click(position={"x": 241, "y": 113})
             print("Element clicked successfully!")
 
-            page.get_by_role("columnheader", name="/01").click(button="right")
+            # Show data as table
+            page.get_by_role("columnheader", name="/01").first.click(button="right")
             page.get_by_test_id("pbimenu-item.Show as a table").click()
+            page.wait_for_timeout(3000)  # Wait for table to fully render
 
             scroll_bar = page.locator(".pivotTable > div:nth-child(7) > .scroll-bar-part-bar").first
             scroll_bar.scroll_into_view_if_needed()
@@ -64,34 +67,45 @@ def main():
 
                 should_break = False
                 for i, header in enumerate(new_headers[:5]):
-                    header.click(button="right")
-                    
-                    copy_button = page.locator('button[role="menuitem"][title="Copy"].pbi-menu-trigger')
-                    copy_button.hover()
-                    
-                    copy_selection_button = page.locator('button[role="menuitem"][data-testid="pbimenu-item.Copy selection"][title="Copy selection"]')
-                    copy_selection_button.click()
+                    try:
+                        header_text = header.text_content().strip()
+                        print(f"Processing header: '{header_text}' (iteration {scroll_iterations + 1})")
 
-                    page.wait_for_timeout(500)  # Tempo para garantir que os dados sejam copiados
+                        if header_text != "Total":
+                            # Click the header to ensure the column is active (optional)
+                            header.click()
+                            page.wait_for_timeout(1000)
 
-                    header_text = header.text_content()
-                    processed_headers.add(header_text)
-                    
-                    if header_text.strip() != "Total":
-                        copied_data = pyperclip.paste()  # Agora usando pyperclip
-                        
-                        parsed_rows = parse_copied_data(header_text, copied_data)
-                        all_data.extend(parsed_rows)
-                        print(f"Copied and parsed selection from header '{header_text}' (iteration {scroll_iterations + 1})")
-                    else:
-                        print(f"Copied selection from header '{header_text}' (iteration {scroll_iterations + 1}) - excluded from output")
-                        print("Found 'Total' header. Ending application.")
-                        should_break = True
-                        break
+                            # Locate the column cells under this header
+                            header_index = processed_headers.__len__() + i + 1  # Adjust for 1-based index
+                            column_cells = page.locator(
+                                f'.pivotTable div[role="gridcell"][aria-colindex="{header_index + 1}"]'
+                            ).all_text_contents()
+
+                            if column_cells:
+                                parsed_rows = parse_column_data(header_text, column_cells)
+                                all_data.extend(parsed_rows)
+                                print(f"Extracted {len(parsed_rows)} rows from header '{header_text}'")
+                            else:
+                                print(f"No data found under header '{header_text}'")
+
+                            processed_headers.add(header_text)
+                        else:
+                            print(f"Encountered 'Total' header - excluded from output")
+                            should_break = True
+                            break
+
+                    except TimeoutError as e:
+                        print(f"Timeout occurred while processing header '{header_text}': {e}")
+                        continue
+                    except Exception as e:
+                        print(f"Error occurred while processing header '{header_text}': {e}")
+                        continue
 
                 if should_break:
                     break
 
+                # Scroll logic
                 box = scroll_bar.bounding_box()
                 if box:
                     if last_scroll_x is None:
@@ -108,11 +122,11 @@ def main():
                     print(f"Scrolled horizontally to x={last_scroll_x} (iteration {scroll_iterations + 1})")
                 
                 scroll_iterations += 1
-                page.wait_for_timeout(1000)
+                page.wait_for_timeout(2000)
 
             print(f"Completed: Processed {len(processed_headers)} headers across {scroll_iterations} scrolls (excluded 'Total' from output).")
 
-            with open("table_data/output/SE_COMPLETA_2023-24.csv", "w", newline="", encoding="utf-8") as f:
+            with open("SE_COMPLETA_2023-24/output/SE_COMPLETA_2023-24.csv", "w", newline="", encoding="utf-8") as f:
                 writer = csv.writer(f)
                 writer.writerow(["UF", "Ano/Semana", "Casos prováveis de Dengue"])
                 writer.writerows(all_data)
