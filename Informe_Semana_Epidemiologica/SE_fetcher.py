@@ -4,7 +4,7 @@ import time
 
 def main():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  # Run in non-headless mode for debugging
+        browser = p.chromium.launch(headless=False)  # Run in non-headless mode for debugging
         page = browser.new_page()
         page.goto("https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/a/aedes-aegypti/monitoramento-das-arboviroses")
         
@@ -90,7 +90,7 @@ def main():
                         sem_data["All_Semanas"][aria_label] = value
 
                 # Save data to YAML
-                with open("Semana_Epidemiologica/output/SE-Y.yaml", "w", encoding="utf-8") as f:
+                with open("Informe_Semana_Epidemiologica/output/SE-Y.yaml", "w", encoding="utf-8") as f:
                     yaml.dump(sem_data, f, allow_unicode=True, default_flow_style=False)
                 print("Data saved to SE-Y.yaml")
 

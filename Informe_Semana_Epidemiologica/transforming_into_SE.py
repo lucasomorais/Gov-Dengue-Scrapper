@@ -1,11 +1,11 @@
 import yaml
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment, numbers
-from datetime import date
+from datetime import date, datetime
 
 # Step 0: Update the YAML file to use comma as decimal separator for incidencia
 # Load the original YAML
-with open('Semana_Epidemiologica/output/SE-Y.yaml', 'r', encoding='utf-8') as f:
+with open('Informe_Semana_Epidemiologica/output/SE-Y.yaml', 'r', encoding='utf-8') as f:
     data = yaml.safe_load(f)
 
 # Modify the incidencia value in All_Semanas
@@ -18,13 +18,13 @@ for key in data['All_Semanas']:
         break
 
 # Save the modified YAML
-with open('Semana_Epidemiologica/output/SE-Y.yaml', 'w', encoding='utf-8') as f:
+with open('Informe_Semana_Epidemiologica/output/SE-Y.yaml', 'w', encoding='utf-8') as f:
     yaml.dump(data, f, allow_unicode=True, default_flow_style=False)
 
 print("Updated YAML")
 
 # Step 1: Load the YAML file with explicit UTF-8 encoding
-yaml_path = 'Semana_Epidemiologica/output/SE-Y.yaml'
+yaml_path = 'Informe_Semana_Epidemiologica/output/SE-Y.yaml'
 try:
     with open(yaml_path, 'r', encoding='utf-8') as f:
         data = yaml.safe_load(f)
@@ -83,6 +83,9 @@ try:
     incidencia_display = incidencia_str  # Already '300,8' from YAML
     if '.' in incidencia_display:
         incidencia_display = incidencia_display.replace('.', ',')  # Ensure it's '300,8'
+    # Remove trailing "-" if present
+    if incidencia_display.endswith('-'):
+        incidencia_display = incidencia_display[:-1]  # Remove the last character (e.g., "312,1-" to "312,1")
     obitos_investigacao = int(obitos_investigacao_str)  # e.g., '656' to 656
     obitos = int(obitos_str)  # e.g., '322' to 322
 except ValueError as e:
@@ -94,7 +97,7 @@ except ValueError as e:
     exit(1)
 
 # Step 3: Load the Excel workbook and select the sheet
-excel_path = 'Semana_Epidemiologica/copy-to-test/Epidemiology - Dengue.xlsx'
+excel_path = 'Informe_Semana_Epidemiologica/copy/Epidemiology - Dengue.xlsx'
 try:
     wb = load_workbook(excel_path)
     ws = wb['Informe Semana Epidemiologica']  # Correct sheet name
@@ -115,8 +118,9 @@ next_row = last_row + 1
 ws.cell(row=next_row, column=1, value=f"SE {se_number}")  # INFORME: e.g., "SE 11"
 ws.cell(row=next_row, column=2, value=date.today().strftime('%d-%b-%Y'))  # DATA: e.g., "19-Mar-2025"
 
-# Column C: INCIDENCIA (write as string to ensure "300,8" display)
-ws.cell(row=next_row, column=3, value=incidencia_display)  # Write as "300,8"
+# Column C: INCIDENCIA (write as a string to force display with comma)
+# We already have incidencia_display as "312,1", so write it directly as a string
+ws.cell(row=next_row, column=3, value=incidencia_display)
 
 # Column D: CASOS PROVÁVEIS (formatted as number without decimal places)
 ws.cell(row=next_row, column=4, value=casos_provaveis).number_format = '#,##0'
@@ -144,21 +148,8 @@ center_alignment = Alignment(horizontal='center')
 for col in range(1, 11):
     ws.cell(row=next_row, column=col).alignment = center_alignment
 
-# Step 7: Save the updated workbook
-output_excel_path = 'Semana_Epidemiologica/copy-to-test/Epidemiology - Dengue_updated.xlsx'
-wb.save(output_excel_path)
-print(f"Excel file saved with string values to {output_excel_path}")
-
-# Step 8: Reopen the Excel file and adjust the INCIDENCIA column to accounting format
-wb = load_workbook(output_excel_path)
-ws = wb['Informe Semana Epidemiologica']
-
-# Convert the string in column C to a number and apply accounting format
-cell = ws.cell(row=next_row, column=3)
-if isinstance(cell.value, str):
-    cell.value = cell.value
-    cell.number_format = '_-* #.##0,00_-;-* #.##0,00_-;_-* "-"??_-;_-@_-'
-
-# Save the file again with the updated format
-wb.save(output_excel_path)
-print(f"Excel file updated with accounting format and saved to {output_excel_path}")
+# Step 7: Save the updated workbook to the results folder with the new name
+current_date = datetime.now().strftime("%m-%d-%y")
+output_excel_path = f'_results/Informe_Semana_Epidemiologica_DATA/Informe_Semana_Epidemiologica_{current_date}.xlsx'
+wb.save(output_excel_path)  # Save to results folder with new name
+print(f"Excel file updated and saved to {output_excel_path}")

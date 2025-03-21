@@ -2,6 +2,7 @@ import yaml
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Border, Side, Alignment, numbers
 from openpyxl.utils import get_column_letter
+from datetime import date, datetime
 
 def yaml_to_excel_with_exact_formatting(yaml_file, excel_file):
     """
@@ -100,5 +101,6 @@ def yaml_to_excel_with_exact_formatting(yaml_file, excel_file):
     wb.save(excel_file)
     print(f"Excel file saved to {excel_file}")
 
-# Example usage
-yaml_to_excel_with_exact_formatting("Big_Numbers_UF/output/dengue_uf_data.yaml", "results/Big_Numbers_UF.xlsx")
+# Calculate the current date and use it in the filename
+current_date = datetime.now().strftime("%m-%d-%y")
+yaml_to_excel_with_exact_formatting("Big_Numbers_UF/output/dengue_uf_data.yaml", f"_results/Big_Numbers_DATA/Big_Numbers_UF_{current_date}.xlsx")

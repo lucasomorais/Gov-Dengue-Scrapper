@@ -41,7 +41,6 @@ def main():
             dropdown.wait_for(state="visible", timeout=5000)
             dropdown.click()
             print("UF dropdown opened")
-            page.pause()
 
             dropdown_manager = DropdownManager(frame_locator, "div.slicer-dropdown-menu[aria-label='UF']")
             dropdown_manager.ensure_open()
