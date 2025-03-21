@@ -3,6 +3,7 @@ from openpyxl import load_workbook
 from openpyxl.styles import Alignment, numbers
 from datetime import date
 
+# Step 0: Update the YAML file to use comma as decimal separator for incidencia
 # Load the original YAML
 with open('Semana_Epidemiologica/output/SE-Y.yaml', 'r', encoding='utf-8') as f:
     data = yaml.safe_load(f)
@@ -11,15 +12,16 @@ with open('Semana_Epidemiologica/output/SE-Y.yaml', 'r', encoding='utf-8') as f:
 for key in data['All_Semanas']:
     if "Coeficiente de incidência" in key:
         value = data['All_Semanas'][key]
-        data['All_Semanas'][key] = value.replace('.', ',')  # e.g., '300.8' to '300,8'
+        # Ensure the value uses a comma as the decimal separator
+        if '.' in value:
+            data['All_Semanas'][key] = value.replace('.', ',')  # e.g., '300.8' to '300,8'
         break
 
 # Save the modified YAML
 with open('Semana_Epidemiologica/output/SE-Y.yaml', 'w', encoding='utf-8') as f:
     yaml.dump(data, f, allow_unicode=True, default_flow_style=False)
 
-
-print("updated yaml")
+print("Updated YAML")
 
 # Step 1: Load the YAML file with explicit UTF-8 encoding
 yaml_path = 'Semana_Epidemiologica/output/SE-Y.yaml'
@@ -77,7 +79,10 @@ if missing_metrics:
 # Convert the strings to appropriate types
 try:
     casos_provaveis = int(casos_provaveis_str.replace(',', ''))  # e.g., '639,353' to 639353
-    incidencia = float(incidencia_str)  # e.g., '300.8' to 300.8 (no need to replace comma here)
+    # Ensure incidencia_display is a string with comma as decimal separator
+    incidencia_display = incidencia_str  # Already '300,8' from YAML
+    if '.' in incidencia_display:
+        incidencia_display = incidencia_display.replace('.', ',')  # Ensure it's '300,8'
     obitos_investigacao = int(obitos_investigacao_str)  # e.g., '656' to 656
     obitos = int(obitos_str)  # e.g., '322' to 322
 except ValueError as e:
@@ -110,8 +115,8 @@ next_row = last_row + 1
 ws.cell(row=next_row, column=1, value=f"SE {se_number}")  # INFORME: e.g., "SE 11"
 ws.cell(row=next_row, column=2, value=date.today().strftime('%d-%b-%Y'))  # DATA: e.g., "19-Mar-2025"
 
-# Column C: INCIDENCIA (formatted with comma as decimal separator)
-ws.cell(row=next_row, column=3, value=incidencia).number_format = '#,##0,0'  # Displays as "300,8"
+# Column C: INCIDENCIA (write as string to ensure "300,8" display)
+ws.cell(row=next_row, column=3, value=incidencia_display)  # Write as "300,8"
 
 # Column D: CASOS PROVÁVEIS (formatted as number without decimal places)
 ws.cell(row=next_row, column=4, value=casos_provaveis).number_format = '#,##0'
@@ -142,4 +147,18 @@ for col in range(1, 11):
 # Step 7: Save the updated workbook
 output_excel_path = 'Semana_Epidemiologica/copy-to-test/Epidemiology - Dengue_updated.xlsx'
 wb.save(output_excel_path)
-print(f"Excel file successfully updated and saved to {output_excel_path}")
+print(f"Excel file saved with string values to {output_excel_path}")
+
+# Step 8: Reopen the Excel file and adjust the INCIDENCIA column to accounting format
+wb = load_workbook(output_excel_path)
+ws = wb['Informe Semana Epidemiologica']
+
+# Convert the string in column C to a number and apply accounting format
+cell = ws.cell(row=next_row, column=3)
+if isinstance(cell.value, str):
+    cell.value = cell.value
+    cell.number_format = '_-* #.##0,00_-;-* #.##0,00_-;_-* "-"??_-;_-@_-'
+
+# Save the file again with the updated format
+wb.save(output_excel_path)
+print(f"Excel file updated with accounting format and saved to {output_excel_path}")
