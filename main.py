@@ -19,6 +19,7 @@ def main():
         "Big_Numbers_UF/output",
         "SE_COMPLETA_2023-24/output",
         "Informe_Semana_Epidemiologica/output",
+        "City_Cases-2024/output",
         "_results",
         "_results/_final_output",
         "_results/Informe_Semana_Epidemiologica_DATA/",

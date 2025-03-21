@@ -1,7 +1,26 @@
 import yaml
+import pandas as pd  # Added for counting rows in CSV
 from openpyxl import load_workbook
-from openpyxl.styles import Alignment, numbers
+from openpyxl.styles import Alignment
 from datetime import date, datetime
+
+# Function to count rows in City_Cases CSV
+def count_municipios_casos():
+    """Count the number of rows in the City_Cases CSV file."""
+    current_date = datetime.now().strftime("%m-%d-%y")
+    city_cases_path = f"City_Cases-2024/output/City_Cases_{current_date}.csv"
+    
+    try:
+        # Read the CSV file
+        df = pd.read_csv(city_cases_path)
+        # Return the number of rows (excluding header)
+        return len(df)
+    except FileNotFoundError:
+        print(f"Error: City_Cases CSV file not found at {city_cases_path}")
+        exit(1)
+    except Exception as e:
+        print(f"Error reading City_Cases CSV file: {e}")
+        exit(1)
 
 # Step 0: Update the YAML file to use comma as decimal separator for incidencia
 # Load the original YAML
@@ -119,14 +138,14 @@ ws.cell(row=next_row, column=1, value=f"SE {se_number}")  # INFORME: e.g., "SE 1
 ws.cell(row=next_row, column=2, value=date.today().strftime('%d-%b-%Y'))  # DATA: e.g., "19-Mar-2025"
 
 # Column C: INCIDENCIA (write as a string to force display with comma)
-# We already have incidencia_display as "312,1", so write it directly as a string
 ws.cell(row=next_row, column=3, value=incidencia_display)
 
 # Column D: CASOS PROVÁVEIS (formatted as number without decimal places)
 ws.cell(row=next_row, column=4, value=casos_provaveis).number_format = '#,##0'
 
-# Column E: MUNICIPIOS CASOS (left empty)
-ws.cell(row=next_row, column=5, value="")
+# Column E: MUNICIPIOS CASOS (insert the count from City_Cases)
+municipios_casos = count_municipios_casos()  # Call the function to get the count
+ws.cell(row=next_row, column=5, value=municipios_casos).number_format = '#,##0'
 
 # Column F: CASOS GRAVES (always 0)
 ws.cell(row=next_row, column=6, value=0)
