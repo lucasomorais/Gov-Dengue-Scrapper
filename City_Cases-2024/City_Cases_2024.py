@@ -4,23 +4,26 @@ from datetime import datetime
 from playwright.sync_api import sync_playwright
 
 def main():
-    # Get the directory where the script is located
+    # Get the directory where the script is located (City_Cases-2024)
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Create a timestamp for the filenames in the format MM-DD-YY
-    timestamp = datetime.now().strftime("%m-%d-%y")  # e.g., "03-21-25"
+    # Go up one level to the project root
+    project_root = os.path.dirname(script_dir)
 
-    # Create the 'original_file' directory if it doesn't exist
+    # Create a timestamp for the filenames in the format MM-DD-YY
+    timestamp = datetime.now().strftime("%m-%d-%y")  # e.g., "03-22-25"
+
+    # Create the 'original_file' directory inside City_Cases-2024 if it doesn't exist
     original_dir = os.path.join(script_dir, "original_file")
     os.makedirs(original_dir, exist_ok=True)
 
-    # Create the 'output' directory if it doesn't exist
-    output_dir = os.path.join(script_dir, "output")
+    # Define the fixed output directory inside _results and ensure it exists
+    output_dir = os.path.join(project_root, "_results", "City_Cases_2024_DATA")
     os.makedirs(output_dir, exist_ok=True)
 
     with sync_playwright() as p:
         # Launch browser in headless mode
-        browser = p.chromium.launch(headless=True, slow_mo=500)  # slow_mo for visibility
+        browser = p.chromium.launch(headless=False, slow_mo=500)  # slow_mo for visibility
         
         # Create a new browser context with download handling
         context = browser.new_context(
@@ -115,9 +118,11 @@ def main():
         # Filter out footer rows: keep only rows where 'code' is a 6-digit number
         df = df[df['code'].str.match(r'^\d{6}$')]
 
-        # Save the processed data to the 'output' folder with date suffix
-        final_output_filename = f"City_Cases_{timestamp}.csv"
-        final_output_path = os.path.join(output_dir, final_output_filename)
+        # Define the fixed output file path relative to the project root
+        output_file = f"_results/City_Cases_2024_DATA/City_Cases_{timestamp}.csv"
+
+        # Construct the full path by joining with the project root
+        final_output_path = os.path.join(project_root, output_file)
         df.to_csv(final_output_path, index=False, encoding='utf-8')
         print(f"Processed file saved as: {final_output_path}")
 

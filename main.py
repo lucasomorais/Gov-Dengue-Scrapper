@@ -20,10 +20,12 @@ def main():
         "SE_COMPLETA_2023-24/output",
         "Informe_Semana_Epidemiologica/output",
         "City_Cases-2024/output",
+
         "_results",
         "_results/_final_output",
         "_results/Informe_Semana_Epidemiologica_DATA/",
         "_results/SE_COMPLETA_2023-24_DATA/",
+        "_results/City_Cases_2024_DATA",
         "_results/Big_Numbers_DATA/",
         "Informe_Semana_Epidemiologica/copy"
     ]
@@ -35,11 +37,12 @@ def main():
 
     # Define the scripts and their expected output files in execution order
     scripts = [
-        ("Big_Numbers_UF/uf_data.py", "Big_Numbers_UF/output/dengue_uf_data.yaml"),
-        ("Big_Numbers_UF/yaml_to_excel.py", f"_results/Big_Numbers_DATA/Big_Numbers_UF_{current_date}.xlsx"),
-        ("SE_COMPLETA_2023-24/table_data.py", "SE_COMPLETA_2023-24/output/SE_COMPLETA_2023-24.csv"),
-        ("SE_COMPLETA_2023-24/csv_to_excel.py", f"_results/SE_COMPLETA_2023-24_DATA/SE_COMPLETA_2023-24_{current_date}.xlsx"),
-        ("Informe_Semana_Epidemiologica/SE_fetcher.py", "Informe_Semana_Epidemiologica/output/SE-Y.yaml"),
+        #("Big_Numbers_UF/uf_data.py", "Big_Numbers_UF/output/dengue_uf_data.yaml"),
+        #("Big_Numbers_UF/yaml_to_excel.py", f"_results/Big_Numbers_DATA/Big_Numbers_UF_{current_date}.xlsx"),
+        #("SE_COMPLETA_2023-24/table_data.py", "SE_COMPLETA_2023-24/output/SE_COMPLETA_2023-24.csv"),
+        #("SE_COMPLETA_2023-24/csv_to_excel.py", f"_results/SE_COMPLETA_2023-24_DATA/SE_COMPLETA_2023-24_{current_date}.xlsx"),
+        #("City_Cases-2024/City_Cases_2024.py", f"_results/City_Cases_2024_DATA/City_Cases_{current_date}.xlsx"),
+        #("Informe_Semana_Epidemiologica/SE_fetcher.py", "Informe_Semana_Epidemiologica/output/SE-Y.yaml"),
         ("Informe_Semana_Epidemiologica/transforming_into_SE.py", f"_results/Informe_Semana_Epidemiologica_DATA/Informe_Semana_Epidemiologica_{current_date}.xlsx"),
         ("_results/_group_sheets.py", f"_results/_final_output/Epidemiology_Dengue_{current_date}.xlsx")
     ]

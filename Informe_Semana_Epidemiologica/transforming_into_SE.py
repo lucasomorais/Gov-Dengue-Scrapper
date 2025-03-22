@@ -8,7 +8,7 @@ from datetime import date, datetime
 def count_municipios_casos():
     """Count the number of rows in the City_Cases CSV file."""
     current_date = datetime.now().strftime("%m-%d-%y")
-    city_cases_path = f"City_Cases-2024/output/City_Cases_{current_date}.csv"
+    city_cases_path = f"_results/City_Cases_2024_DATA/City_Cases_{current_date}.csv"
     
     try:
         # Read the CSV file

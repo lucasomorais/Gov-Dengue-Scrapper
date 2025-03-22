@@ -47,6 +47,7 @@ def main():
         f"_results/Big_Numbers_DATA/Big_Numbers_UF_{current_date}.xlsx",
         f"_results/SE_COMPLETA_2023-24_DATA/SE_COMPLETA_2023-24_{current_date}.xlsx",
         f"_results/Informe_Semana_Epidemiologica_DATA/Informe_Semana_Epidemiologica_{current_date}.xlsx"
+        f"_results/City_Cases_2024_DATA/City_Cases_{current_date}.xlsx"
     ]
 
     # Create a new workbook for the merged file
