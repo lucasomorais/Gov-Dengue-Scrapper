@@ -1,25 +1,25 @@
 import yaml
-import pandas as pd  # Added for counting rows in CSV
+import pandas as pd  # Used for counting rows in XLSX
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment
 from datetime import date, datetime
 
-# Function to count rows in City_Cases CSV
+# Function to count rows in City_Cases XLSX
 def count_municipios_casos():
-    """Count the number of rows in the City_Cases CSV file."""
+    """Count the number of rows in the City_Cases XLSX file."""
     current_date = datetime.now().strftime("%m-%d-%y")
-    city_cases_path = f"_results/City_Cases_2024_DATA/City_Cases_{current_date}.csv"
+    city_cases_path = f"_results/City_Cases_2024_DATA/City_Cases_{current_date}.xlsx"
     
     try:
-        # Read the CSV file
-        df = pd.read_csv(city_cases_path)
+        # Read the XLSX file
+        df = pd.read_excel(city_cases_path)
         # Return the number of rows (excluding header)
         return len(df)
     except FileNotFoundError:
-        print(f"Error: City_Cases CSV file not found at {city_cases_path}")
+        print(f"Error: City_Cases XLSX file not found at {city_cases_path}")
         exit(1)
     except Exception as e:
-        print(f"Error reading City_Cases CSV file: {e}")
+        print(f"Error reading City_Cases XLSX file: {e}")
         exit(1)
 
 # Step 0: Update the YAML file to use comma as decimal separator for incidencia

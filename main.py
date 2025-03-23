@@ -19,8 +19,6 @@ def main():
         "Big_Numbers_UF/output",
         "SE_COMPLETA_2023-24/output",
         "Informe_Semana_Epidemiologica/output",
-        "City_Cases-2024/output",
-
         "_results",
         "_results/_final_output",
         "_results/Informe_Semana_Epidemiologica_DATA/",
@@ -43,7 +41,7 @@ def main():
         #("SE_COMPLETA_2023-24/csv_to_excel.py", f"_results/SE_COMPLETA_2023-24_DATA/SE_COMPLETA_2023-24_{current_date}.xlsx"),
         #("City_Cases-2024/City_Cases_2024.py", f"_results/City_Cases_2024_DATA/City_Cases_{current_date}.xlsx"),
         #("Informe_Semana_Epidemiologica/SE_fetcher.py", "Informe_Semana_Epidemiologica/output/SE-Y.yaml"),
-        ("Informe_Semana_Epidemiologica/transforming_into_SE.py", f"_results/Informe_Semana_Epidemiologica_DATA/Informe_Semana_Epidemiologica_{current_date}.xlsx"),
+        #("Informe_Semana_Epidemiologica/transforming_into_SE.py", f"_results/Informe_Semana_Epidemiologica_DATA/Informe_Semana_Epidemiologica_{current_date}.xlsx"),
         ("_results/_group_sheets.py", f"_results/_final_output/Epidemiology_Dengue_{current_date}.xlsx")
     ]
 

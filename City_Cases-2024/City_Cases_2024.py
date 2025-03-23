@@ -23,7 +23,7 @@ def main():
 
     with sync_playwright() as p:
         # Launch browser in headless mode
-        browser = p.chromium.launch(headless=False, slow_mo=500)  # slow_mo for visibility
+        browser = p.chromium.launch(headless=True, slow_mo=500)  # slow_mo for visibility
         
         # Create a new browser context with download handling
         context = browser.new_context(
@@ -103,10 +103,6 @@ def main():
         # Read the CSV, skip the first 4 rows, use semicolon delimiter, and specify encoding
         df = pd.read_csv(original_path, skiprows=4, sep=';', header=None, encoding='latin1')
 
-        # The data should have two columns after the semicolon split
-        # Column 0: "Município de residência" (e.g., "110001 ALTA FLORESTA D'OESTE")
-        # Column 1: "Casos_Prováveis" (e.g., "50")
-
         # Split Column 0 into two columns: code and name
         df['code'] = df[0].str[:6]  # First 6 characters for the code
         df['name'] = df[0].str[7:].str.strip()  # The rest, after the space, for the name
@@ -119,11 +115,11 @@ def main():
         df = df[df['code'].str.match(r'^\d{6}$')]
 
         # Define the fixed output file path relative to the project root
-        output_file = f"_results/City_Cases_2024_DATA/City_Cases_{timestamp}.csv"
+        output_file = f"_results/City_Cases_2024_DATA/City_Cases_{timestamp}.xlsx"
 
         # Construct the full path by joining with the project root
         final_output_path = os.path.join(project_root, output_file)
-        df.to_csv(final_output_path, index=False, encoding='utf-8')
+        df.to_excel(final_output_path, index=False)  # Save as XLSX
         print(f"Processed file saved as: {final_output_path}")
 
     except Exception as e:
