@@ -32,18 +32,20 @@ def main():
     current_date = datetime.now().strftime("%m-%d-%y")
 
     # Define the paths to the Excel files with their full paths
-    files = [
-        f"_results/Big_Numbers_DATA/Big_Numbers_UF_{current_date}.xlsx",
-        f"_results/SE_COMPLETA_2023-24_DATA/SE_COMPLETA_2023-24_{current_date}.xlsx",
+    files = [ 
         f"_results/Informe_Semana_Epidemiologica_DATA/Informe_Semana_Epidemiologica_{current_date}.xlsx",
-        f"_results/City_Cases_2024_DATA/City_Cases_{current_date}.xlsx"
+        f"_results/Dengue_Cases_Year_DATA/Dengue_Cases_Year_{current_date}.xlsx",
+        f"_results/Big_Numbers_DATA/Big_Numbers_UF_{current_date}.xlsx",
+        f"_results/SE_COMPLETA_2023-24_DATA/SE_COMPLETA_2023-24_{current_date}.xlsx",       
+        f"_results/City_Cases_2024_DATA/City_Cases_{current_date}.xlsx"    
     ]
 
     # Define the fixed sheet names corresponding to each file
     fixed_sheet_names = [
-        "Big Numbers UF",
-        "SE Completa 2023-24",
         "Informe Semana Epidemiologica",
+        "Dengue Cases Year",
+        "Big Numbers UF",
+        "SE Completa 2023-24",     
         "City Cases 2024"
     ]
 
