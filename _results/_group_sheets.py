@@ -63,9 +63,30 @@ def main():
         # Load the source workbook
         source_wb = load_workbook(file_path)
         
-        # Assuming each source file has only one sheet, get the first sheet
-        source_ws = source_wb.active
-        
+        # Check the number of sheets in the source file
+        sheet_names = source_wb.sheetnames
+        print(f"File {file_path} contains sheets: {sheet_names}")
+
+        # If there's more than one sheet, try to find the correct one
+        if len(sheet_names) > 1:
+            # Look for a sheet name that matches or closely matches the intended name
+            matching_sheet = None
+            for sn in sheet_names:
+                if sheet_name.lower() in sn.lower():  # Case-insensitive partial match
+                    matching_sheet = sn
+                    break
+            if matching_sheet:
+                source_ws = source_wb[matching_sheet]
+                print(f"Selected sheet '{matching_sheet}' from {file_path} for '{sheet_name}'")
+            else:
+                # Fallback: Use the first sheet and warn
+                source_ws = source_wb[sheet_names[0]]
+                print(f"Warning: No matching sheet found in {file_path} for '{sheet_name}'. Using first sheet: '{sheet_names[0]}'")
+        else:
+            # Single sheet case: use it directly
+            source_ws = source_wb[sheet_names[0]]
+            print(f"Using single sheet '{sheet_names[0]}' from {file_path} for '{sheet_name}'")
+
         # Create a new sheet in the destination workbook with the fixed sheet name
         dest_ws = wb.create_sheet(title=sheet_name)
 
@@ -98,6 +119,7 @@ def main():
     os.makedirs(os.path.dirname(output_path), exist_ok=True)  # Ensure output directory exists
     wb.save(output_path)
     print(f"Merged file saved as: {output_path}")
+    print(f"Final sheets in workbook: {wb.sheetnames}")
 
 if __name__ == "__main__":
     main()

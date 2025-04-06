@@ -73,9 +73,10 @@ def main():
                     if item.get_attribute("aria-selected") != "true":
                         item.click()
                         print(f"Checked UF: {uf_name}")
+                        time.sleep(1)
 
                     # Wait for the UI to update
-                    time.sleep(3)  # Fixed delay to ensure UI updates
+                    time.sleep(4)  # Fixed delay to ensure UI updates
                     frame_locator.locator("svg.card").first.wait_for(state="visible", timeout=15000)
 
                     # Fetch data

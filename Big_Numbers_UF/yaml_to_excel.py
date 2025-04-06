@@ -1,13 +1,14 @@
 import yaml
 from openpyxl import Workbook
-from openpyxl.styles import Font, PatternFill, Border, Side, Alignment, numbers
+from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
 from openpyxl.utils import get_column_letter
-from datetime import date, datetime
+from datetime import datetime
 
 def yaml_to_excel_with_exact_formatting(yaml_file, excel_file):
     """
     Converts a YAML file containing UF data into an Excel file with the exact format
     matching Pasta1.xlsx (blue headers, alternating row colors, centered data, gridlines).
+    Uses "Geral" format with commas as decimal separators.
     """
     # Create a new Excel workbook and select the active worksheet
     wb = Workbook()
@@ -53,27 +54,25 @@ def yaml_to_excel_with_exact_formatting(yaml_file, excel_file):
     # Add data rows with alternating colors
     for row_idx, (uf, data) in enumerate(uf_data.items(), 2):
         casos = data.get("Casos prováveis de Dengue", "").replace(",", "")
-        incidencia = data.get("Coeficiente de incidência", "").replace(",", ".")
+        incidencia = data.get("Coeficiente de incidência", "").replace(".", ",") if data.get("Coeficiente de incidência") else "0"
         obitos_investigacao = data.get("Óbitos em investigação", "")
         obitos_confirmados = data.get("Óbitos por Dengue", "")
 
+        # Convert to appropriate string format with comma as decimal separator
         row = [
-            int(casos) if casos else 0,
-            float(incidencia) if incidencia else 0.0,
-            int(obitos_investigacao) if obitos_investigacao else 0,
-            int(obitos_confirmados) if obitos_confirmados else 0
+            str(int(casos)) if casos else "0",  # Integer as string
+            incidencia,  # Keep as string with comma (e.g., "123,4")
+            str(int(obitos_investigacao)) if obitos_investigacao else "0",  # Integer as string
+            str(int(obitos_confirmados)) if obitos_confirmados else "0"  # Integer as string
         ]
         ws.append(row)
 
-        # Apply alternating row colors
+        # Apply alternating row colors and formatting
         for col_idx, cell in enumerate(ws[row_idx], 1):
             cell.font = data_font
             cell.alignment = data_alignment
             cell.border = thin_border
-            if col_idx == 2:  # Incidence column
-                cell.number_format = "#,##0.0"  # One decimal place
-            else:
-                cell.number_format = "#,##0"  # Integer with thousand separator
+            cell.number_format = "General"  # Use "Geral" (General) format
             # Apply fill based on row index (odd/even)
             if row_idx % 2 == 0:  # Even rows (light blue)
                 cell.fill = light_blue_fill

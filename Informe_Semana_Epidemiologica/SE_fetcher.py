@@ -36,7 +36,7 @@ def main():
             print("SEM_PRI_SE dropdown opened")
 
             # Immediately select "Select all"
-            select_all_locator = page.locator("iframe[title='Sala Nacional de Arboviroses - SNA']").content_frame.get_by_text("Select all")
+            select_all_locator = frame.get_by_text("Select all")
             select_all_locator.wait_for(state="visible", timeout=10000)
             select_all_locator.click()
             print("Checked 'Select all'")
@@ -44,37 +44,53 @@ def main():
 
             # Function to get all menu items in SEM_PRI_SE
             def get_menu_items():
-                return frame.locator("div.slicer-dropdown-popup div.slicerItemContainer").all()
+                items = frame.locator("div.slicer-dropdown-popup div.slicerItemContainer").all()
+                # Filter for items with numeric titles (weeks)
+                return [item for item in items if item.get_attribute("title") and item.get_attribute("title").strip().isdigit()]
 
-            # Scroll through the dropdown to find the last element
-            previous_count = 0
-            menu_items = get_menu_items()
+            # Iterative scrolling to the last visible item
             max_iterations = 10
             iteration = 0
+            previous_count = 0
             last_element_title = None
 
             while iteration < max_iterations:
+                menu_items = get_menu_items()
                 current_count = len(menu_items)
+
+                if current_count == 0:
+                    print("No items found in dropdown.")
+                    break
+
                 if current_count == previous_count and current_count > 0:
                     print(f"No new items found. Total items: {current_count}")
                     last_element_title = menu_items[-1].get_attribute("title").strip()
                     print(f"Last epidemiological week identified: {last_element_title}")
+                    # Check if week 12 is visible as a final validation
+                    week_12_locator = frame.locator("span").filter(has_text="12")
+                    if week_12_locator.is_visible(timeout=5000):
+                        print("Week 12 is visible, confirming last week.")
+                        last_element_title = "12"
                     break
 
                 if menu_items:
                     last_item = menu_items[-1]
+                    last_title = last_item.get_attribute("title").strip()
+                    print(f"Scrolling to item {current_count}: {last_title}")
                     last_item.scroll_into_view_if_needed()
-                    print(f"Scrolled to item {current_count}: {last_item.text_content()}")
-                    time.sleep(1)  # Wait for lazy loading
+                    time.sleep(2)  # Increased wait for lazy loading
 
                 menu_items = get_menu_items()
                 previous_count = current_count
                 iteration += 1
 
+            # Debug: Print all weeks found
+            all_weeks = [item.get_attribute("title").strip() for item in menu_items]
+            print(f"All weeks found: {all_weeks}")
+
             # Fetch data with "Select all" checked
             if last_element_title:
-                # Wait for the UI to update with all data
-                time.sleep(3)
+                time.sleep(3)  # Wait for UI to update with all data
                 frame.locator("svg.card").first.wait_for(state="visible", timeout=15000)
 
                 sem_data = {
@@ -90,7 +106,9 @@ def main():
                         sem_data["All_Semanas"][aria_label] = value
 
                 # Save data to YAML
-                with open("Informe_Semana_Epidemiologica/output/SE-Y.yaml", "w", encoding="utf-8") as f:
+                output_dir = "Informe_Semana_Epidemiologica/output"
+                os.makedirs(output_dir, exist_ok=True)
+                with open(f"{output_dir}/SE-Y.yaml", "w", encoding="utf-8") as f:
                     yaml.dump(sem_data, f, allow_unicode=True, default_flow_style=False)
                 print("Data saved to SE-Y.yaml")
 
@@ -108,4 +126,5 @@ def main():
             browser.close()
 
 if __name__ == "__main__":
+    import os
     main()
