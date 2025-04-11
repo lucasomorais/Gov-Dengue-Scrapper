@@ -5,8 +5,8 @@ import os
 def main():
     # Determine current year, month, and date for file name
     current_year = datetime.now().year  # 2025
-    current_month = datetime.now().strftime("%B")  # e.g., "March"
-    current_date = datetime.now().strftime("%m-%d-%y")  # e.g., "03-24-25"
+    current_month = datetime.now().strftime("%B")  # e.g., "April"
+    current_date = datetime.now().strftime("%m-%d-%y")  # e.g., "04-11-25"
 
     # Define the path to the Big_Numbers_UF Excel file
     big_numbers_path = f"_results/Big_Numbers_DATA/Big_Numbers_UF_{current_date}.xlsx"
@@ -15,7 +15,16 @@ def main():
     try:
         wb_big = load_workbook(big_numbers_path)
         sheet_big = wb_big.active
-        total_casos = sum(cell.value for cell in sheet_big["A"][1:] if isinstance(cell.value, (int, float)) and cell.value is not None)
+         
+        # Soma ajustada para lidar com vírgulas como separadores decimais
+        total_casos = sum(
+            float(str(cell.value).replace(',', '.')) if cell.value is not None and str(cell.value).strip().replace('.', '').replace(',', '').isdigit()
+            else (cell.value if isinstance(cell.value, (int, float)) else 0)
+            for cell in sheet_big["A"][1:]
+        )
+        
+        print(f"Soma final: {total_casos}")
+        
     except FileNotFoundError:
         print(f"[ERROR] File not found: {big_numbers_path}")
         return
