@@ -28,12 +28,12 @@ with open('Informe_Semana_Epidemiologica/output/SE-Y.yaml', 'r', encoding='utf-8
     data = yaml.safe_load(f)
 
 # Modify the incidencia value in All_Semanas
-for key in data['All_Semanas']:
+for key in data['All_Semanas_Data']:
     if "Coeficiente de incidência" in key:
-        value = data['All_Semanas'][key]
+        value = data['All_Semanas_Data'][key]
         # Ensure the value uses a comma as the decimal separator
         if '.' in value:
-            data['All_Semanas'][key] = value.replace('.', ',')  # e.g., '300.8' to '300,8'
+            data['All_Semanas_Data'][key] = value.replace('.', ',')  # e.g., '300.8' to '300,8'
         break
 
 # Save the modified YAML
@@ -53,17 +53,17 @@ except FileNotFoundError:
 
 # Step 2: Extract the epidemiological week and metrics
 se_number = data.get('Last_Epidemiological_Week', None)
-all_semanas = data.get('All_Semanas', {})
+all_semanas_data = data.get('All_Semanas_Data', {})
 
-if not se_number or not all_semanas:
-    print("Error: Missing 'Last_Epidemiological_Week' or 'All_Semanas' in YAML")
+if not se_number or not all_semanas_data:
+    print("Error: Missing 'Last_Epidemiological_Week' or 'All_Semanas_Data' in YAML")
     print(f"YAML content: {data}")
     exit(1)
 
 # Debugging: Print all keys in All_Semanas
 print("Keys in All_Semanas:")
-for key in all_semanas.keys():
-    print(f"- '{key}': '{all_semanas[key]}'")
+for key in all_semanas_data.keys():
+    print(f"- '{key}': '{all_semanas_data[key]}'")
 
 # Initialize variables to store the metric values
 casos_provaveis_str = None
@@ -80,11 +80,11 @@ required_metrics = {
 }
 
 # Find the keys that contain the desired metric names
-for key in all_semanas:
+for key in all_semanas_data:
     key_normalized = key.encode().decode('utf-8', errors='replace')  # Handle encoding issues
     for metric_name, var_name in required_metrics.items():
         if metric_name in key_normalized:
-            globals()[var_name] = all_semanas[key]
+            globals()[var_name] = all_semanas_data[key]
             break
 
 # Check for missing metrics and report them

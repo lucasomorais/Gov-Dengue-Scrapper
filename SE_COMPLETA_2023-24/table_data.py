@@ -101,7 +101,7 @@ def main():
                     
                     page.mouse.move(start_x, box['y'] + box['height'] / 2)
                     page.mouse.down()
-                    new_x = start_x + 142
+                    new_x = start_x + 127
                     page.mouse.move(new_x, box['y'] + box['height'] / 2)
                     page.mouse.up()
                     last_scroll_x = new_x
