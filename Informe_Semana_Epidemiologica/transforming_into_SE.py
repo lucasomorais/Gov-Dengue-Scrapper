@@ -97,16 +97,15 @@ if missing_metrics:
 
 # Convert the strings to appropriate types
 try:
-    casos_provaveis = int(casos_provaveis_str.replace(',', ''))  # e.g., '639,353' to 639353
-    # Ensure incidencia_display is a string with comma as decimal separator
-    incidencia_display = incidencia_str  # Already '300,8' from YAML
+    casos_provaveis = int(casos_provaveis_str.replace(',', ''))  # Remove vírgulas
+    incidencia_display = incidencia_str
     if '.' in incidencia_display:
-        incidencia_display = incidencia_display.replace('.', ',')  # Ensure it's '300,8'
-    # Remove trailing "-" if present
+        incidencia_display = incidencia_display.replace('.', ',')
     if incidencia_display.endswith('-'):
-        incidencia_display = incidencia_display[:-1]  # Remove the last character (e.g., "312,1-" to "312,1")
-    obitos_investigacao = int(obitos_investigacao_str)  # e.g., '656' to 656
-    obitos = int(obitos_str)  # e.g., '322' to 322
+        incidencia_display = incidencia_display[:-1]
+
+    obitos_investigacao = int(obitos_investigacao_str.replace(',', ''))  # Precaução
+    obitos = int(obitos_str.replace(',', ''))  # Remove vírgulas
 except ValueError as e:
     print(f"Error converting metric values: {e}")
     print(f"casos_provaveis_str: {casos_provaveis_str}")
@@ -114,6 +113,7 @@ except ValueError as e:
     print(f"obitos_investigacao_str: {obitos_investigacao_str}")
     print(f"obitos_str: {obitos_str}")
     exit(1)
+
 
 # Step 3: Load the Excel workbook and select the sheet
 excel_path = 'Informe_Semana_Epidemiologica/copy/Epidemiology - Dengue.xlsx'
@@ -154,7 +154,7 @@ ws.cell(row=next_row, column=6, value=0)
 ws.cell(row=next_row, column=7, value=obitos_investigacao).number_format = '#,##0'
 
 # Column H: OBITOS (formatted as number without decimal places)
-ws.cell(row=next_row, column=8, value=obitos).number_format = '#,##0'
+ws.cell(row=next_row, column=8, value=obitos)
 
 # Column I: LETALIDADE (formatted as percentage with 2 decimal places)
 ws.cell(row=next_row, column=9, value=f"=H{next_row}/D{next_row}").number_format = '0.00%'

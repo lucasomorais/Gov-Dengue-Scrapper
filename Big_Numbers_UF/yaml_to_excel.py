@@ -53,17 +53,23 @@ def yaml_to_excel_with_exact_formatting(yaml_file, excel_file):
 
     # Add data rows with alternating colors
     for row_idx, (uf, data) in enumerate(uf_data.items(), 2):
-        casos = data.get("Casos prováveis de Dengue", "").replace(",", "")
-        incidencia = data.get("Coeficiente de incidência", "").replace(".", ",") if data.get("Coeficiente de incidência") else "0"
-        obitos_investigacao = data.get("Óbitos em investigação", "")
-        obitos_confirmados = data.get("Óbitos por Dengue", "")
+        casos_raw = data.get("Casos prováveis de Dengue", "")
+        incidencia_raw = data.get("Coeficiente de incidência", "")
+        obitos_investigacao_raw = data.get("Óbitos em investigação", "")
+        obitos_confirmados_raw = data.get("Óbitos por Dengue", "")
 
-        # Convert to appropriate string format with comma as decimal separator
+        # Sanitize and convert
+        casos = casos_raw.replace(",", "") if casos_raw else "0"
+        incidencia = incidencia_raw.replace(".", ",") if incidencia_raw else "0"
+        obitos_investigacao = obitos_investigacao_raw.replace(",", "") if obitos_investigacao_raw else "0"
+        obitos_confirmados = obitos_confirmados_raw.replace(",", "") if obitos_confirmados_raw else "0"
+
+        # Prepare row data
         row = [
-            str(int(casos)) if casos else "0",  # Integer as string
-            incidencia,  # Keep as string with comma (e.g., "123,4")
-            str(int(obitos_investigacao)) if obitos_investigacao else "0",  # Integer as string
-            str(int(obitos_confirmados)) if obitos_confirmados else "0"  # Integer as string
+            str(int(casos)) if casos else "0",
+            incidencia,
+            str(int(obitos_investigacao)) if obitos_investigacao else "0",
+            str(int(obitos_confirmados)) if obitos_confirmados else "0"
         ]
         ws.append(row)
 
@@ -72,13 +78,12 @@ def yaml_to_excel_with_exact_formatting(yaml_file, excel_file):
             cell.font = data_font
             cell.alignment = data_alignment
             cell.border = thin_border
-            cell.number_format = "General"  # Use "Geral" (General) format
-            # Apply fill based on row index (odd/even)
-            if row_idx % 2 == 0:  # Even rows (light blue)
+            cell.number_format = "General"
+            if row_idx % 2 == 0:
                 cell.fill = light_blue_fill
-            else:  # Odd rows (light orange)
+            else:
                 cell.fill = light_orange_fill
-        ws.row_dimensions[row_idx].height = 16  # Match data row height from Pasta1.xlsx
+        ws.row_dimensions[row_idx].height = 16
 
     # Adjust column widths dynamically
     for col_idx, col in enumerate(ws.columns, 1):
@@ -90,7 +95,7 @@ def yaml_to_excel_with_exact_formatting(yaml_file, excel_file):
                     max_length = len(str(cell.value))
             except:
                 pass
-        adjusted_width = min((max_length + 2) * 1.2, 15)  # Cap width at 15 for consistency
+        adjusted_width = min((max_length + 2) * 1.2, 15)
         ws.column_dimensions[column].width = adjusted_width
 
     # Enable gridlines
@@ -102,4 +107,7 @@ def yaml_to_excel_with_exact_formatting(yaml_file, excel_file):
 
 # Calculate the current date and use it in the filename
 current_date = datetime.now().strftime("%m-%d-%y")
-yaml_to_excel_with_exact_formatting("Big_Numbers_UF/output/dengue_uf_data.yaml", f"_results/Big_Numbers_DATA/Big_Numbers_UF_{current_date}.xlsx")
+yaml_to_excel_with_exact_formatting(
+    "Big_Numbers_UF/output/dengue_uf_data.yaml", 
+    f"_results/Big_Numbers_DATA/Big_Numbers_UF_{current_date}.xlsx"
+)

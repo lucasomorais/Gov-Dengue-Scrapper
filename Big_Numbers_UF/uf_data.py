@@ -10,7 +10,7 @@ class DropdownManager:
     def ensure_open(self, timeout=5000):
         """Ensure the dropdown is open, reopening if necessary."""
         if self.dropdown.get_attribute("aria-expanded") != "true":
-            self.dropdown.click(delay=100)
+            self.dropdown.click(delay=500)
             self.frame_locator.locator("div.slicer-dropdown-popup").wait_for(state="visible", timeout=timeout)
 
 def main():
@@ -27,14 +27,21 @@ def main():
         print("Page loaded")
 
         try:
-            frame_locator = page.frame_locator("iframe[title='Sala Nacional de Arboviroses - SNA']")
+            # Access the iframe
+            frame_locator = page.frame_locator("iframe[title='Sala Nacional de Arboviroses - SNA']").first
             frame_locator.locator("body").wait_for(state="visible", timeout=15000)
             print("Iframe accessed")
 
-            dengue_element = frame_locator.get_by_role("group").filter(has_text="Dengue").locator("path").first
+            # Grab the correct element inside the iframe
+            dengue_element = (
+                frame_locator
+                .get_by_role("group", name="Page navigation . Exibir painel de Dengue")
+                .locator("path")
+                .first
+            )
             dengue_element.wait_for(state="visible", timeout=10000)
             dengue_element.scroll_into_view_if_needed()
-            dengue_element.click(delay=100)
+            dengue_element.click(delay=500)
             print("Dengue panel selected")
 
             dropdown = frame_locator.locator("div.slicer-dropdown-menu[aria-label='UF']")
@@ -65,7 +72,7 @@ def main():
                 uf_names = [item.get_attribute("title").strip() for item in uf_items if item.get_attribute("title").strip().lower() != "select all"]
 
                 new_ufs = [uf for uf in uf_names if uf not in processed_ufs]
-                print(f"New UFs to process: {new_ufs}")  # Debugging output
+                print(f"New UFs to process: {new_ufs}")
 
                 if not new_ufs:
                     break
@@ -81,12 +88,11 @@ def main():
                     if item.get_attribute("aria-selected") != "true":
                         item.click()
                         print(f"Checked UF: {uf_name}")
-                        time.sleep(1)
+                        time.sleep(1.3)
 
                     time.sleep(4)
                     frame_locator.locator("svg.card").first.wait_for(state="visible", timeout=15000)
 
-                    # Fetch data function
                     def fetch_uf_data():
                         data = {}
                         for card in frame_locator.locator("svg.card").all():
@@ -99,6 +105,7 @@ def main():
                         return data
 
                     uf_values = fetch_uf_data()
+                    print(f"Captured data for {uf_name}: {uf_values}")
                     if uf_values == global_data:
                         print(f"Data for {uf_name} matched global data, retrying fetch...")
                         time.sleep(3)

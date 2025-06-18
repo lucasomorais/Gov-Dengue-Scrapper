@@ -13,7 +13,7 @@ def main():
 
     folders = [
         "Big_Numbers_UF/output",
-        "SE_COMPLETA_2023-24/output",
+       "SE_COMPLETA_2023-24/output",
         "Informe_Semana_Epidemiologica/output",
         "_results",
         "_results/_final_output",
@@ -23,8 +23,8 @@ def main():
         "_results/Big_Numbers_DATA/",
         "Informe_Semana_Epidemiologica/copy",
         "Dengue_Cases_Year",
-        "_results/Dengue_Cases_Year_DATA"  # Added new output folder
-    ]
+        "_results/Dengue_Cases_Year_DATA"
+     ]
 
     for folder in folders:
         os.makedirs(folder, exist_ok=True)

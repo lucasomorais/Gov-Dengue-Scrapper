@@ -24,24 +24,22 @@ def main():
             page.wait_for_load_state("networkidle", timeout=35000)
             print("Page loaded and network idle.")
 
-            print("Accessing iframe...")
-            frame_locator = page.frame_locator("iframe[title='Sala Nacional de Arboviroses - SNA']")
-            frame = frame_locator
-            frame.locator("div.visualContainerHost").first.wait_for(state="visible", timeout=35000)
-            print("Iframe accessed and initial content visible.")
+            # Access the iframe
+            frame = page.frame_locator("iframe[title='Sala Nacional de Arboviroses - SNA']").first
+            frame.locator("body").wait_for(state="visible", timeout=15000)
+            print("Iframe accessed")
 
-            print("Selecting Dengue panel...")
-            dengue_element_container = frame.locator('div.themableBackgroundColor[role="group"][aria-label="Dengue"]')
-            if not dengue_element_container.is_visible(timeout=5000):
-                 print("Using fallback selector for Dengue panel")
-                 dengue_element_container = frame.get_by_role("group").filter(has_text="Dengue")
-
-            dengue_element_clickable = dengue_element_container.locator("path").first
-            dengue_element_clickable.wait_for(state="visible", timeout=15000)
-            dengue_element_clickable.scroll_into_view_if_needed()
-            time.sleep(0.5)
-            dengue_element_clickable.click(force=True, delay=500)
-            print("Dengue panel selected.")
+            # Grab the correct element inside the iframe
+            dengue_element = (
+                frame
+                .get_by_role("group", name="Page navigation . Exibir painel de Dengue")
+                .locator("path")
+                .first
+            )
+            dengue_element.wait_for(state="visible", timeout=10000)
+            dengue_element.scroll_into_view_if_needed()
+            dengue_element.click(delay=500)
+            print("Dengue panel selected")
             time.sleep(2)
 
             print("Opening SEM_PRI_SE dropdown (Original Method)...")

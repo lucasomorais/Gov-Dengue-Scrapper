@@ -37,7 +37,8 @@ def main():
             )
 
             element = page.wait_for_selector("visual-container:nth-of-type(1) g.tile > path", state="visible")
-            element.click(position={"x": 241, "y": 113})
+            element = page.locator('[role="group"][aria-label="Page navigation . Exibir painel de Dengue"] path').first
+            element.click()
             print("Element clicked successfully!")
 
             page.get_by_role("columnheader", name="/01").click(button="right")
@@ -101,7 +102,7 @@ def main():
                     
                     page.mouse.move(start_x, box['y'] + box['height'] / 2)
                     page.mouse.down()
-                    new_x = start_x + 127
+                    new_x = start_x + 119
                     page.mouse.move(new_x, box['y'] + box['height'] / 2)
                     page.mouse.up()
                     last_scroll_x = new_x
