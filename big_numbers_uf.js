@@ -38,6 +38,8 @@ function allValuesChanged(globalData, newData, uf) {
   await ensureDropdownOpen(page, dropdownSelector);
   console.log("📂 Dropdown aberto");
 
+  await page.pause()
+
   // Captura dados globais (sem UF selecionada)
   const globalData = {};
   const cards = await page.locator("svg.card").all();

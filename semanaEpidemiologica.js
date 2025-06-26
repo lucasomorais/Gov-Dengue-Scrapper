@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const clipboardy = require("clipboardy");
+const { exec } = require("child_process");
 const { navigateToDengue, generateDatedFilename } = require("./utils");
 
 /**
@@ -23,16 +23,58 @@ function parseCopiedData(header, rawData) {
   return parsed;
 }
 
+/**
+ * Reads the system clipboard using PowerShell
+ * @returns {Promise<string>}
+ */
+async function readClipboard() {
+  return new Promise((resolve, reject) => {
+    exec("powershell Get-Clipboard", (error, stdout, stderr) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(stdout.trim());
+      }
+    });
+  });
+}
+
+/**
+ * Right-clicks on the header and copies the selected data
+ */
+async function copyAndParseColumn(page, header, headerText) {
+  await header.click({ button: "right" });
+
+  const copyButton = page.locator('button[role="menuitem"][title="Copy"].pbi-menu-trigger');
+  await copyButton.waitFor({ state: "visible" });
+  await copyButton.hover();
+
+  const copySelection = page.locator('button[role="menuitem"][data-testid="pbimenu-item.Copy selection"]');
+  await copySelection.waitFor({ state: "visible" });
+  await copySelection.click();
+
+  await page.waitForTimeout(500); // Wait for clipboard operation
+  const copied = await readClipboard(); // Use PowerShell to read clipboard
+  return parseCopiedData(headerText, copied);
+}
+
 (async () => {
   const { browser, page } = await navigateToDengue();
   const context = page.context();
-  page.pause()
+
+  // page.pause();
+
+  // Display as table if not already
+  await page.getByRole("columnheader", { name: "Região|UF|Município" }).click({ button: "right" });
+  const showAsTable = page.getByTestId("pbimenu-item.Show as a table");
+  await showAsTable.waitFor({ state: "visible" });
+  await showAsTable.click();
+  await page.waitForTimeout(1000);
 
   const allData = [];
 
   const columnHeaders = page.getByRole("columnheader");
   const scrollBar = page.locator(".pivotTable > div:nth-child(7) > .scroll-bar-part-bar").first();
-
   await scrollBar.scrollIntoViewIfNeeded();
 
   const processedHeaders = new Set();
@@ -42,7 +84,7 @@ function parseCopiedData(header, rawData) {
   while (true) {
     const headers = await columnHeaders.all();
     if (headers.length === 0) {
-      console.log("No headers found.");
+      console.log("⚠️ No headers found.");
       break;
     }
 
@@ -53,7 +95,7 @@ function parseCopiedData(header, rawData) {
     }
 
     if (newHeaders.length === 0) {
-      console.log("No new headers. Finished scrolling.");
+      console.log("✅ No new headers. End of table.");
       break;
     }
 
@@ -61,29 +103,18 @@ function parseCopiedData(header, rawData) {
 
     for (const header of newHeaders.slice(0, 5)) {
       const headerText = await header.textContent();
-
-      await header.click({ button: "right" });
-
-      const copyButton = page.locator('button[role="menuitem"][title="Copy"].pbi-menu-trigger');
-      await copyButton.hover();
-
-      const copySelection = page.locator('button[role="menuitem"][data-testid="pbimenu-item.Copy selection"]');
-      await copySelection.click();
-
-      await page.waitForTimeout(500);
-
       processedHeaders.add(headerText);
 
-      if (headerText.trim() !== "Total") {
-        const copied = await clipboardy.read();
-        const rows = parseCopiedData(headerText, copied);
-        allData.push(...rows);
-        console.log(`Copied and parsed '${headerText}'`);
-      } else {
-        console.log("Found 'Total'. Stopping.");
+      if (headerText.trim() === "Total") {
+        console.log("🔚 Found 'Total'. Stopping collection.");
         shouldBreak = true;
         break;
       }
+
+      const parsed = await copyAndParseColumn(page, header, headerText);
+      allData.push(...parsed);
+      // console.log(allData)
+      console.log(`📋 Copied and processed: ${headerText}`);
     }
 
     if (shouldBreak) break;
@@ -91,7 +122,7 @@ function parseCopiedData(header, rawData) {
     const box = await scrollBar.boundingBox();
     if (box) {
       const startX = lastScrollX ?? box.x + box.width / 2;
-      const endX = startX + 119;
+      const endX = startX + 80;
 
       await page.mouse.move(startX, box.y + box.height / 2);
       await page.mouse.down();
@@ -104,13 +135,15 @@ function parseCopiedData(header, rawData) {
     }
   }
 
-  const outputDir = "SE_COMPLETA_2023-24";
+  const outputDir = "output";
   fs.mkdirSync(outputDir, { recursive: true });
-  const filename = path.join(outputDir, generateDatedFilename("SE_COMPLETA_2023-24", "csv", ""));
-  const csvContent = ["UF,Ano/Semana,Casos prováveis de Dengue", ...allData.map(row => row.join(","))].join("\n");
-  fs.writeFileSync(filename, csvContent, "utf-8");
 
-  console.log(`✅ Dados salvos em ${filename}`);
+  const filename = path.join(outputDir, generateDatedFilename("semana_epidemiologica", "yaml", ""));
+  const csvContent = ["UF,Ano/Semana,Casos prováveis de Dengue", ...allData.map((r) => r.join(","))].join("\n");
+
+  fs.writeFileSync(filename, csvContent, "utf-8");
+  console.log(`✅ Data saved to ${filename}`);
+
   await context.close();
   await browser.close();
 })();
