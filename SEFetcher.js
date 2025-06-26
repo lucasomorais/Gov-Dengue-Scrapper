@@ -1,61 +1,38 @@
-const { chromium } = require('playwright');
 const fs = require('fs');
 const yaml = require('js-yaml');
 const path = require('path');
-
-const HEADLESS = false;
+const { navigateToDengue, generateDatedFilename, HEADLESS } = require('./utils');
 
 (async () => {
-  const browser = await chromium.launch({ headless: HEADLESS });
-  const page = await browser.newPage();
-  page.setDefaultTimeout(25000);
-
+  let browser;
   try {
-    console.log("Navigating to page...");
-    await page.goto("https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/a/aedes-aegypti/monitoramento-das-arboviroses", { waitUntil: 'load' });
+    console.log("Navigating to Dengue panel...");
+    const { browser: launchedBrowser, page } = await navigateToDengue();
+    browser = launchedBrowser;
+    page.setDefaultTimeout(25000);
 
-    const cookieButton = page.locator("button.btn-accept");
-    try {
-      await cookieButton.waitFor({ state: "visible", timeout: 10000 });
-      await cookieButton.click();
-      console.log("Cookies accepted.");
-    } catch {
-      console.log("Cookie consent button not found or already accepted.");
-    }
-
-    await page.waitForLoadState("networkidle", { timeout: 35000 });
-    console.log("Page loaded and network idle.");
-
-    const frame = page.frameLocator("iframe[title='Sala Nacional de Arboviroses - SNA']").first();
-    await frame.locator("body").waitFor({ state: "visible", timeout: 15000 });
-    console.log("Iframe accessed");
-
-    const dengueElement = frame.getByRole("group", { name: /Exibir painel de Dengue/i }).locator("path").first();
-    await dengueElement.waitFor({ state: "visible", timeout: 10000 });
-    await dengueElement.scrollIntoViewIfNeeded();
-    await dengueElement.click({ delay: 500 });
-    console.log("Dengue panel selected");
-
-    await page.waitForTimeout(2000);
-
-    const dropdownButton = frame.locator("div.slicer-dropdown-menu[aria-label='SEM_PRI_SE']");
+    // Wait for the SEM_PRI_SE dropdown to be visible
+    const dropdownButton = page.locator("div.slicer-dropdown-menu[aria-label='SEM_PRI_SE']");
     await dropdownButton.waitFor({ state: "visible", timeout: 15000 });
     await dropdownButton.click();
     console.log("SEM_PRI_SE dropdown opened.");
 
-    let popup = frame.locator("div.slicer-dropdown-popup.focused");
+    // Locate the dropdown popup
+    let popup = page.locator("div.slicer-dropdown-popup.focused");
     try {
       await popup.waitFor({ state: "visible", timeout: 10000 });
     } catch {
       console.log("Could not find focused popup. Trying generic visible...");
-      popup = frame.locator("div.slicer-dropdown-popup:visible").first();
+      popup = page.locator("div.slicer-dropdown-popup:visible").first();
       await popup.waitFor({ state: "visible", timeout: 5000 });
     }
 
+    // Access the items container within the popup
     const container = popup.locator(".slicerBody");
     await container.waitFor({ state: "visible", timeout: 10000 });
     console.log("Items container located.");
 
+    // Handle the "Select all" option
     const selectAll = popup.getByText("Select all", { exact: true });
     await selectAll.waitFor({ state: "visible", timeout: 10000 });
     const isChecked = await selectAll.evaluate(node =>
@@ -69,6 +46,7 @@ const HEADLESS = false;
       console.log("'Select all' was already checked.");
     }
 
+    // Perform infinite scroll to load all dropdown items
     console.log("Starting infinite scroll...");
     let lastWeek = null;
     let previousTitle = null;
@@ -130,16 +108,18 @@ const HEADLESS = false;
       return;
     }
 
+    // Fetch data for the last week
     console.log(`Fetching data for week ${lastWeek}...`);
     await page.waitForTimeout(5000);
 
     try {
-      await frame.locator("svg.card").first().waitFor({ state: "visible", timeout: 30000 });
+      await page.locator("svg.card").first().waitFor({ state: "visible", timeout: 30000 });
     } catch {
       console.warn("Data cards did not become visible.");
     }
 
-    const cards = await frame.locator("svg.card").all();
+    // Extract data from cards
+    const cards = await page.locator("svg.card").all();
     const semData = {
       Last_Epidemiological_Week: lastWeek,
       All_Semanas_Data: {}
@@ -153,13 +133,13 @@ const HEADLESS = false;
         const labelLocator = card.locator("text.label");
 
         await valueLocator.waitFor({ state: "visible", timeout: 5000 });
-        const value = await valueLocator.textContent({ timeout: 5000 });
+        const value = (await valueLocator.textContent({ timeout: 5000 }))?.trim() || null;
 
-        let label = await card.getAttribute("aria-label");
-        if (!label || label.toLowerCase().includes("card")) {
+        let label = (await card.getAttribute("aria-label"))?.trim() || null;
+        if (!label || (typeof label === 'string' && label.toLowerCase().includes("card"))) {
           try {
             await labelLocator.waitFor({ state: "visible", timeout: 3000 });
-            label = await labelLocator.textContent({ timeout: 3000 });
+            label = (await labelLocator.textContent({ timeout: 3000 }))?.trim() || null;
           } catch {
             label = `Card_${i + 1}_NoLabel`;
           }
@@ -167,24 +147,29 @@ const HEADLESS = false;
 
         if (label && value) {
           console.log(`Card ${i + 1}: Label='${label}', Value='${value}'`);
-          semData.All_Semanas_Data[label.trim()] = value.trim();
+          semData.All_Semanas_Data[label] = value;
+        } else {
+          console.warn(`Card ${i + 1}: Skipped due to missing label or value (Label='${label}', Value='${value}')`);
         }
       } catch (e) {
-        console.warn(`Error processing card ${i + 1}: ${e}`);
+        console.warn(`Error processing card ${i + 1}: ${e.message}`);
       }
     }
 
-    const outputDir = "Informe_Semana_Epidemiologica/output";
+    // Save data to a YAML file
+    const outputDir = "output";
     fs.mkdirSync(outputDir, { recursive: true });
-    const filePath = path.join(outputDir, "SE-Y.yaml");
+    const filePath = generateDatedFilename(`SE-Y-${lastWeek}`, "yaml", outputDir);
 
     fs.writeFileSync(filePath, yaml.dump(semData, { noRefs: true, sortKeys: false }), 'utf8');
     console.log(`✅ Data saved to ${filePath}`);
 
   } catch (err) {
-    console.error(`❌ Error occurred: ${err}`);
+    console.error(`❌ Error occurred: ${err.message}`);
   } finally {
-    console.log("Closing browser.");
-    await browser.close();
+    if (browser) {
+      console.log("Closing browser.");
+      await browser.close();
+    }
   }
 })();
