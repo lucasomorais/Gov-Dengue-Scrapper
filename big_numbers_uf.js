@@ -1,7 +1,7 @@
-const { chromium } = require('playwright');
 const fs = require('fs');
 const yaml = require('js-yaml');
-const { HEADLESS } = require('./config');
+const { navigateToDengue, generateDatedFilename } = require('./utils');
+
 
 // Função auxiliar para garantir que o dropdown está aberto
 async function ensureDropdownOpen(page, selector) {
@@ -28,18 +28,8 @@ function allValuesChanged(globalData, newData, uf) {
 }
 
 (async () => {
-  const browser = await chromium.launch({ headless: HEADLESS });
-  const page = await browser.newPage();
 
-  // Abre a visualização pública do Power BI
-  await page.goto('https://app.powerbi.com/view?r=eyJrIjoiYzQyOTI4M2ItZTQwMC00ODg4LWJiNTQtODc5MzljNWIzYzg3IiwidCI6IjlhNTU0YWQzLWI1MmItNDg2Mi1hMzZmLTg0ZDg5MWU1YzcwNSJ9&pageName=ReportSectionbd7616200acb303571fc');
-  // await page.pause();
-  await page.waitForLoadState('load');
-
-  // Clica na aba de "Dengue"
-  const dengueTab = page.getByRole('group', { name: /Exibir painel de Dengue/i }).locator('path').first();
-  await dengueTab.waitFor({ state: 'visible', timeout: 10000 });
-  await dengueTab.click();
+  const { browser, page } = await navigateToDengue();
 
   const dropdownSelector = "div.slicer-dropdown-menu[aria-label='UF']";
   const dropdown = page.locator(dropdownSelector);
@@ -135,10 +125,10 @@ function allValuesChanged(globalData, newData, uf) {
     }
   }
 
-  // Salvar arquivo final
-  fs.mkdirSync("output", { recursive: true });
-  fs.writeFileSync("output/dengue_uf_data.yaml", yaml.dump(ufData, { lineWidth: -1 }), "utf-8");
-  console.log("✅ Dados salvos em output/dengue_uf_data.yaml");
+  const outputPath = generateDatedFilename('dengue_uf_data', 'yaml');
+  fs.mkdirSync('output', { recursive: true });
+  fs.writeFileSync(outputPath, yaml.dump(ufData, { lineWidth: -1 }), 'utf-8');
+  console.log(`✅ Dados salvos em ${outputPath}`);
 
   await browser.close();
 })();

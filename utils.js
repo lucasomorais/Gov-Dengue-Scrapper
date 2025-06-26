@@ -1,0 +1,46 @@
+// utils.js
+
+const { chromium } = require('playwright');
+const path = require('path');
+
+HEADLESS = false
+/**
+ * Navega até o painel de Dengue no Power BI.
+ * @returns {Promise<{ browser: Browser, page: Page }>}
+ */
+async function navigateToDengue() {
+  const browser = await chromium.launch({ headless: HEADLESS });
+  const page = await browser.newPage();
+
+  await page.goto('https://app.powerbi.com/view?r=eyJrIjoiYzQyOTI4M2ItZTQwMC00ODg4LWJiNTQtODc5MzljNWIzYzg3IiwidCI6IjlhNTU0YWQzLWI1MmItNDg2Mi1hMzZmLTg0ZDg5MWU1YzcwNSJ9&pageName=ReportSectionbd7616200acb303571fc');
+  await page.waitForLoadState('load');
+
+  const dengueTab = page.getByRole('group', { name: /Exibir painel de Dengue/i }).locator('path').first();
+  await dengueTab.waitFor({ state: 'visible', timeout: 10000 });
+  await dengueTab.click();
+
+  return { browser, page };
+}
+
+/**
+ * Gera um nome de arquivo com data no formato YYYY_MM_DD
+ * @param {string} baseName
+ * @param {string} extension
+ * @param {string} [outputDir='output']
+ * @returns {string}
+ */
+function generateDatedFilename(baseName, extension, outputDir = 'output') {
+  const today = new Date();
+  const dateStr = today.toISOString().split('T')[0].replace(/-/g, '_');
+  const filename = `${baseName}_${dateStr}.${extension}`;
+  return path.join(outputDir, filename);
+}
+
+// Outras funções auxiliares podem ficar aqui também
+
+// ✅ Exportar apenas as funções públicas
+module.exports = {
+  navigateToDengue,
+  generateDatedFilename,
+  HEADLESS
+};
