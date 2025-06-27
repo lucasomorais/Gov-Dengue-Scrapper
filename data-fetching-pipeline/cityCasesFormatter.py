@@ -12,7 +12,7 @@ def main():
         original_path = os.path.join(output_dir, f"city_cases_{timestamp}.csv")
 
         # Read the CSV, skip the first 4 rows, use semicolon delimiter, and specify encoding
-        df = pd.read_csv(original_path, skiprows=4, sep=';', header=None, encoding='latin1')
+        df = pd.read_csv(original_path, skiprows=0, sep=';', header=None, encoding='latin1')
 
         # Split Column 0 into two columns: code and name
         df['code'] = df[0].str[:6]  # First 6 characters for the code

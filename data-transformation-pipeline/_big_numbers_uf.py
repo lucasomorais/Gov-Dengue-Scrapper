@@ -2,7 +2,12 @@ import yaml
 import openpyxl
 
 def normalize_key(key):
-    return key.split(":")[0].strip().lower()
+    return (
+        key.replace(" Do ", " do ")
+           .replace(" De ", " de ")
+           .strip()
+           .lower()
+    )
 
 def main():
     # Arquivos
@@ -13,6 +18,11 @@ def main():
     # Carrega o YAML
     with open(yaml_file, "r", encoding="utf-8") as f:
         yaml_data = yaml.safe_load(f)
+
+    # Normaliza as chaves do YAML
+    yaml_data_normalized = {
+        normalize_key(k): v for k, v in yaml_data.items()
+    }
 
     # Carrega a planilha
     wb = openpyxl.load_workbook(excel_file)
@@ -29,16 +39,19 @@ def main():
     # Itera sobre as linhas da planilha (a partir da 2ª linha)
     for row in ws.iter_rows(min_row=2):
         estado_nome = row[1].value.strip() if row[1].value else None  # Coluna B
-        if not estado_nome or estado_nome not in yaml_data:
+        estado_normalizado = normalize_key(estado_nome) if estado_nome else None
+
+        if not estado_normalizado or estado_normalizado not in yaml_data_normalized:
             continue
 
-        dados_estado = yaml_data[estado_nome]
+        dados_estado = yaml_data_normalized[estado_normalizado]
         for campo_yaml, valor in dados_estado.items():
             campo_normalizado = normalize_key(campo_yaml)
             for key_map, col_letter in col_map.items():
                 if key_map in campo_normalizado:
                     # Tratamento especial para coluna G (remover separadores de milhar)
                     if col_letter == 'G':
+                        print(f"{estado_nome} | original: {valor} -> limpo: {str(valor).replace('.', '').replace(',', '')}")
                         valor_limpo = int(str(valor).replace('.', '').replace(',', ''))
                         ws[f"{col_letter}{row[0].row}"] = valor_limpo
                     else:

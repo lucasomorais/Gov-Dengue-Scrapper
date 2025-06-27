@@ -9,17 +9,17 @@ console.log(`[INFO] Start: ${startTime.getHours()}:${startTime.getMinutes().toSt
 
 async function main() {
     try {
-        // console.log('\n=== Running semanaEpidemiologica ===\n');
-        // await semanaEpidemiologica();
-        // console.log('\n=== semanaEpidemiologica completed ===\n');
+        console.log('\n=== Running semanaEpidemiologica ===\n');
+        await semanaEpidemiologica();
+        console.log('\n=== semanaEpidemiologica completed ===\n');
 
-        // console.log('\n=== Running bigNumbersUF ===\n');
-        // await bigNumbersUF();
-        // console.log('\n=== bigNumbersUF completed ===\n');
+        console.log('\n=== Running bigNumbersUF ===\n');
+        await bigNumbersUF();
+        console.log('\n=== bigNumbersUF completed ===\n');
 
-        // console.log('\n=== Running SEFetcher ===\n');
-        // await SEFetcher();
-        // console.log('\n=== SEFetcher completed ===\n');
+        console.log('\n=== Running SEFetcher ===\n');
+        await SEFetcher();
+        console.log('\n=== SEFetcher completed ===\n');
 
          console.log('\n=== Running cityCases ===\n');
          await cityCases();
