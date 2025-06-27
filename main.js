@@ -1,23 +1,30 @@
 const { bigNumbersUF } = require('./scripts/big_numbers_uf.js');
 const { SEFetcher } = require('./scripts/SEFetcher.js');
 const { semanaEpidemiologica } = require('./scripts/semanaEpidemiologica.js');
+const { downloadDengueCSV } = require('./scripts/cityCases.js');
+
 
 const startTime = new Date();
 console.log(`[INFO] Start: ${startTime.getHours()}:${startTime.getMinutes().toString().padStart(2, '0')}\n`);
 
 async function main() {
     try {
-        console.log('\n=== Running semanaEpidemiologica ===\n');
-        await semanaEpidemiologica();
-        console.log('\n=== semanaEpidemiologica completed ===\n');
+        // console.log('\n=== Running semanaEpidemiologica ===\n');
+        // await semanaEpidemiologica();
+        // console.log('\n=== semanaEpidemiologica completed ===\n');
 
-        console.log('\n=== Running bigNumbersUF ===\n');
-        await bigNumbersUF();
-        console.log('\n=== bigNumbersUF completed ===\n');
+        // console.log('\n=== Running bigNumbersUF ===\n');
+        // await bigNumbersUF();
+        // console.log('\n=== bigNumbersUF completed ===\n');
 
-        console.log('\n=== Running SEFetcher ===\n');
-        await SEFetcher();
-        console.log('\n=== SEFetcher completed ===\n');
+        // console.log('\n=== Running SEFetcher ===\n');
+        // await SEFetcher();
+        // console.log('\n=== SEFetcher completed ===\n');
+
+        console.log('\n=== Running downloadDengueCSV ===\n');
+        await downloadDengueCSV();
+        console.log('\n=== downloadDengueCSV completed ===\n');
+
     } catch (error) {
         console.error(`[ERROR] An error occurred: ${error.message}`);
     } finally {
