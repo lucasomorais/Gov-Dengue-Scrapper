@@ -1,9 +1,9 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
 const path = require('path');
-const { navigateToDengue, generateDatedFilename, HEADLESS } = require('./utils');
+const { navigateToDengue, generateDatedFilename, extractCardsData } = require('./utils');
 
-(async () => {
+(async function SEFetcher() {
   let browser;
   try {
     console.log("Navigating to Dengue panel...");
@@ -11,13 +11,11 @@ const { navigateToDengue, generateDatedFilename, HEADLESS } = require('./utils')
     browser = launchedBrowser;
     page.setDefaultTimeout(25000);
 
-    // Wait for the SEM_PRI_SE dropdown to be visible
     const dropdownButton = page.locator("div.slicer-dropdown-menu[aria-label='SEM_PRI_SE']");
     await dropdownButton.waitFor({ state: "visible", timeout: 15000 });
     await dropdownButton.click();
     console.log("SEM_PRI_SE dropdown opened.");
 
-    // Locate the dropdown popup
     let popup = page.locator("div.slicer-dropdown-popup.focused");
     try {
       await popup.waitFor({ state: "visible", timeout: 10000 });
@@ -27,12 +25,10 @@ const { navigateToDengue, generateDatedFilename, HEADLESS } = require('./utils')
       await popup.waitFor({ state: "visible", timeout: 5000 });
     }
 
-    // Access the items container within the popup
     const container = popup.locator(".slicerBody");
     await container.waitFor({ state: "visible", timeout: 10000 });
     console.log("Items container located.");
 
-    // Handle the "Select all" option
     const selectAll = popup.getByText("Select all", { exact: true });
     await selectAll.waitFor({ state: "visible", timeout: 10000 });
     const isChecked = await selectAll.evaluate(node =>
@@ -46,7 +42,6 @@ const { navigateToDengue, generateDatedFilename, HEADLESS } = require('./utils')
       console.log("'Select all' was already checked.");
     }
 
-    // Perform infinite scroll to load all dropdown items
     console.log("Starting infinite scroll...");
     let lastWeek = null;
     let previousTitle = null;
@@ -108,59 +103,19 @@ const { navigateToDengue, generateDatedFilename, HEADLESS } = require('./utils')
       return;
     }
 
-    // Fetch data for the last week
     console.log(`Fetching data for week ${lastWeek}...`);
     await page.waitForTimeout(5000);
+    await page.locator("svg.card").first().waitFor({ state: "visible", timeout: 30000 });
 
-    try {
-      await page.locator("svg.card").first().waitFor({ state: "visible", timeout: 30000 });
-    } catch {
-      console.warn("Data cards did not become visible.");
-    }
-
-    // Extract data from cards
-    const cards = await page.locator("svg.card").all();
+    const cardData = await extractCardsData(page, { includeLetalidade: true });
     const semData = {
       Last_Epidemiological_Week: lastWeek,
-      All_Semanas_Data: {}
+      All_Semanas_Data: cardData
     };
 
-    console.log(`Found ${cards.length} cards.`);
-    for (let i = 0; i < cards.length; i++) {
-      try {
-        const card = cards[i];
-        const valueLocator = card.locator("text.value tspan");
-        const labelLocator = card.locator("text.label");
-
-        await valueLocator.waitFor({ state: "visible", timeout: 5000 });
-        const value = (await valueLocator.textContent({ timeout: 5000 }))?.trim() || null;
-
-        let label = (await card.getAttribute("aria-label"))?.trim() || null;
-        if (!label || (typeof label === 'string' && label.toLowerCase().includes("card"))) {
-          try {
-            await labelLocator.waitFor({ state: "visible", timeout: 3000 });
-            label = (await labelLocator.textContent({ timeout: 3000 }))?.trim() || null;
-          } catch {
-            label = `Card_${i + 1}_NoLabel`;
-          }
-        }
-
-        if (label && value) {
-          console.log(`Card ${i + 1}: Label='${label}', Value='${value}'`);
-          semData.All_Semanas_Data[label] = value;
-        } else {
-          console.warn(`Card ${i + 1}: Skipped due to missing label or value (Label='${label}', Value='${value}')`);
-        }
-      } catch (e) {
-        console.warn(`Error processing card ${i + 1}: ${e.message}`);
-      }
-    }
-
-    // Save data to a YAML file
-    const outputDir = "output";
+    const outputDir = path.join(__dirname, '..', 'output');
     fs.mkdirSync(outputDir, { recursive: true });
     const filePath = generateDatedFilename(`SE-Y-${lastWeek}`, "yaml", outputDir);
-
     fs.writeFileSync(filePath, yaml.dump(semData, { noRefs: true, sortKeys: false }), 'utf8');
     console.log(`✅ Data saved to ${filePath}`);
 

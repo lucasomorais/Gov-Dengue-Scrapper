@@ -1,14 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const { exec } = require("child_process");
-const { navigateToDengue, generateDatedFilename } = require("./utils");
+const { navigateToDengueHeadless, generateDatedFilename } = require("./utils");
 
-/**
- * Parse copied data from clipboard into structured rows
- * @param {string} header - Header text (e.g., "2023/01")
- * @param {string} rawData - Tab-separated raw text
- * @returns {Array<Array<string>>}
- */
 function parseCopiedData(header, rawData) {
   const lines = rawData.trim().split("\n");
   const parsed = [];
@@ -23,25 +17,15 @@ function parseCopiedData(header, rawData) {
   return parsed;
 }
 
-/**
- * Reads the system clipboard using PowerShell
- * @returns {Promise<string>}
- */
 async function readClipboard() {
   return new Promise((resolve, reject) => {
-    exec("powershell Get-Clipboard", (error, stdout, stderr) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(stdout.trim());
-      }
+    exec("powershell Get-Clipboard", (error, stdout) => {
+      if (error) reject(error);
+      else resolve(stdout.trim());
     });
   });
 }
 
-/**
- * Right-clicks on the header and copies the selected data
- */
 async function copyAndParseColumn(page, header, headerText) {
   await header.click({ button: "right" });
 
@@ -53,18 +37,15 @@ async function copyAndParseColumn(page, header, headerText) {
   await copySelection.waitFor({ state: "visible" });
   await copySelection.click();
 
-  await page.waitForTimeout(500); // Wait for clipboard operation
-  const copied = await readClipboard(); // Use PowerShell to read clipboard
+  await page.waitForTimeout(500);
+  const copied = await readClipboard();
   return parseCopiedData(headerText, copied);
 }
 
-(async () => {
-  const { browser, page } = await navigateToDengue();
+(async function semanaEpidemiologica() {
+  const { browser, page } = await navigateToDengueHeadless();
   const context = page.context();
 
-  // page.pause();
-
-  // Display as table if not already
   await page.getByRole("columnheader", { name: "Região|UF|Município" }).click({ button: "right" });
   const showAsTable = page.getByTestId("pbimenu-item.Show as a table");
   await showAsTable.waitFor({ state: "visible" });
@@ -79,7 +60,6 @@ async function copyAndParseColumn(page, header, headerText) {
 
   const processedHeaders = new Set();
   let lastScrollX = null;
-  let scrollIterations = 0;
 
   while (true) {
     const headers = await columnHeaders.all();
@@ -113,7 +93,6 @@ async function copyAndParseColumn(page, header, headerText) {
 
       const parsed = await copyAndParseColumn(page, header, headerText);
       allData.push(...parsed);
-      // console.log(allData)
       console.log(`📋 Copied and processed: ${headerText}`);
     }
 
@@ -130,12 +109,11 @@ async function copyAndParseColumn(page, header, headerText) {
       await page.mouse.up();
 
       lastScrollX = endX;
-      scrollIterations++;
       await page.waitForTimeout(1000);
     }
   }
 
-  const outputDir = "output";
+  const outputDir = path.join(__dirname, '..', 'output');
   fs.mkdirSync(outputDir, { recursive: true });
 
   const filename = path.join(outputDir, generateDatedFilename("semana_epidemiologica", "yaml", ""));
@@ -146,4 +124,4 @@ async function copyAndParseColumn(page, header, headerText) {
 
   await context.close();
   await browser.close();
-})();
+})
