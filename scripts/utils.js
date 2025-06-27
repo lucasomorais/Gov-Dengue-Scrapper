@@ -82,8 +82,11 @@ async function extractCardsData(context, options = {}) {
                 }
             }
 
-            // Limpeza: remove sufixos como "- DENV" e traços
-            label = label?.replace(/\s*[:-]?\s*DENV.*$/, "").replace(/[:\-]\s*$/, "").trim();
+            // Clean the label: remove trailing numbers, values, or suffixes
+            label = label?.replace(/\s*[:-]?\s*DENV.*$/, "")  // Remove "- DENV" or similar
+                          .replace(/\s+\d+[.,]?\d*.*$/, "")   // Remove trailing numbers/values (e.g., "9,074")
+                          .replace(/[:\-]\s*$/, "")           // Remove trailing colon or dash
+                          .trim();
 
             if (!value || !label) continue;
             if (!includeLetalidade && label.toLowerCase().includes("letalidade")) continue;

@@ -1,7 +1,7 @@
-const { bigNumbersUF } = require('./scripts/big_numbers_uf.js');
+const { bigNumbersUF } = require('./scripts/bigNumbersUF.js');
 const { SEFetcher } = require('./scripts/SEFetcher.js');
 const { semanaEpidemiologica } = require('./scripts/semanaEpidemiologica.js');
-const { downloadDengueCSV } = require('./scripts/cityCases.js');
+const { cityCases } = require('./scripts/cityCases.js');
 
 
 const startTime = new Date();
@@ -21,9 +21,9 @@ async function main() {
         // await SEFetcher();
         // console.log('\n=== SEFetcher completed ===\n');
 
-        console.log('\n=== Running downloadDengueCSV ===\n');
-        await downloadDengueCSV();
-        console.log('\n=== downloadDengueCSV completed ===\n');
+         console.log('\n=== Running cityCases ===\n');
+         await cityCases();
+         console.log('\n=== cityCases completed ===\n');
 
     } catch (error) {
         console.error(`[ERROR] An error occurred: ${error.message}`);

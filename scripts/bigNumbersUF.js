@@ -45,6 +45,10 @@ async function bigNumbersUF() {
         const ufData = {};
 
         while (true) {
+            // Guarantee the UF dropdown items are visible before querying them
+            await ensureDropdownOpen(page, dropdownSelector);
+            await page.locator("div.slicerItemContainer").first().waitFor({ state: "visible", timeout: 5000 });
+
             const ufItems = await page.locator("div.slicerItemContainer").all();
             const ufTitles = [];
 
@@ -102,7 +106,7 @@ async function bigNumbersUF() {
         }
 
         const outputDir = path.join(__dirname, '..', 'output');
-        const outputPath = generateDatedFilename('dengue_uf_data', 'yaml', outputDir);
+        const outputPath = generateDatedFilename('big_numbers_uf', 'yaml', outputDir);
         fs.mkdirSync('output', { recursive: true });
         fs.writeFileSync(outputPath, yaml.dump(ufData, { lineWidth: -1 }), 'utf-8');
         console.log(`✅ Dados salvos em ${outputPath}`);

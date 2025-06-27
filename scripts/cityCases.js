@@ -5,7 +5,7 @@ const path = require('path');
 /**
  * Downloads the Dengue CSV from Datasus Tabnet with "Município de residência" selected.
  */
-async function downloadDengueCSV() {
+async function cityCases() {
     const scriptDir = __dirname;
     const projectRoot = path.resolve(scriptDir, '..');
     const outputDir = path.join(projectRoot, 'output');
@@ -15,7 +15,7 @@ async function downloadDengueCSV() {
         fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '-'); // "yy-mm-dd"
+    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '_'); // "yy-mm-dd"
 
     const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({ acceptDownloads: true });
@@ -65,4 +65,4 @@ async function downloadDengueCSV() {
     await browser.close();
 }
 
-module.exports = { downloadDengueCSV };
+module.exports = { cityCases };

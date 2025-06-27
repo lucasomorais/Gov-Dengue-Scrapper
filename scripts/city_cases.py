@@ -8,7 +8,7 @@ def main():
         script_dir = os.path.dirname(os.path.abspath(__file__))
         project_root = os.path.dirname(script_dir)
         output_dir = os.path.join(project_root, "output")
-        timestamp = datetime.now().strftime("%Y-%m-%d")
+        timestamp = datetime.now().strftime("%Y_%m_%d")
         original_path = os.path.join(output_dir, f"city_cases_{timestamp}.csv")
 
         # Read the CSV, skip the first 4 rows, use semicolon delimiter, and specify encoding

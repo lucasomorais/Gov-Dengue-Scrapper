@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 def city_cases():
-    municipios = pd.read_csv("output/city_cases_2025-06-27.csv")
+    municipios = pd.read_csv("output/city_cases_2025_06_27.csv")
     numero_de_municipios = municipios["Cod Mun"].count()
     return (numero_de_municipios)
     
@@ -128,8 +128,6 @@ for row in range(2, ws.max_row + 1):
         if isinstance(data_value, datetime):
             valid_rows.append((row, data_value))
 
-if not valid_rows:
-    raise ValueError("No valid rows found with 'INFORME' like 'SE \d+' and valid 'DATA'")
 
 # Find the row with the latest date
 last_row = max(valid_rows, key=lambda x: x[1])[0]
@@ -176,7 +174,7 @@ if next_row + 1 <= ws.max_row:
     print(f"[INFO] Cleared rows from {next_row + 1} to {ws.max_row}")
 
 # Step 8: Save the updated workbook to the results folder with the new name
-current_date = datetime.now().strftime("%m-%d-%y")
+current_date = datetime.now().strftime("%m_%d_%y")
 output_excel_path = f'_results/Informe_Semana_Epidemiologica_{current_date}.xlsx'
 wb.save(output_excel_path)  # Save to results folder with new name
 print(f"Excel file updated and saved to {output_excel_path}")
