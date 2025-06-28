@@ -1,7 +1,7 @@
-const { bigNumbersUF } = require('./scripts/bigNumbersUF.js');
-const { SEFetcher } = require('./scripts/SEFetcher.js');
-const { semanaEpidemiologica } = require('./scripts/semanaEpidemiologica.js');
-const { cityCases } = require('./scripts/cityCases.js');
+const { bigNumbersUF } = require('./bigNumbersUF.js');
+const { SEFetcher } = require('./SEFetcher.js');
+const { semanaEpidemiologica } = require('./semanaEpidemiologica.js');
+const { cityCases } = require('./cityCases.js');
 
 
 const startTime = new Date();

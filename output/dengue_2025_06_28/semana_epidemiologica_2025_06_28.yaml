@@ -1241,33 +1241,6 @@ Sao Paulo,2024/46 ,3603
 Parana,2024/46 ,587
 Rio Grande Do Sul,2024/46 ,118
 Santa Catarina,2024/46 ,154
-Distrito Federal,2024/47 ,472
-Goias,2024/47 ,1482
-Mato Grosso,2024/47 ,220
-Mato Grosso Do Sul,2024/47 ,40
-Alagoas,2024/47 ,69
-Bahia,2024/47 ,364
-Ceara,2024/47 ,77
-Maranhao,2024/47 ,32
-Paraiba,2024/47 ,127
-Pernambuco,2024/47 ,245
-Piaui,2024/47 ,30
-Rio Grande Do Norte,2024/47 ,92
-Sergipe,2024/47 ,5
-Acre,2024/47 ,177
-Amapa,2024/47 ,30
-Amazonas,2024/47 ,133
-Para,2024/47 ,197
-Rondonia,2024/47 ,14
-Roraima,2024/47 ,2
-Tocantins,2024/47 ,20
-Espirito Santo,2024/47 ,1210
-Minas Gerais,2024/47 ,1953
-Rio De Janeiro,2024/47 ,299
-Sao Paulo,2024/47 ,4496
-Parana,2024/47 ,702
-Rio Grande Do Sul,2024/47 ,90
-Santa Catarina,2024/47 ,138
 Distrito Federal,2024/48 ,359
 Goias,2024/48 ,1515
 Mato Grosso,2024/48 ,270
@@ -1419,12 +1392,12 @@ Sergipe,2025/01 ,10
 Acre,2025/01 ,495
 Amapa,2025/01 ,44
 Amazonas,2025/01 ,145
-Para,2025/01 ,301
+Para,2025/01 ,302
 Rondonia,2025/01 ,33
 Roraima,2025/01 ,4
 Tocantins,2025/01 ,30
 Espirito Santo,2025/01 ,1625
-Minas Gerais,2025/01 ,2496
+Minas Gerais,2025/01 ,2490
 Rio De Janeiro,2025/01 ,558
 Sao Paulo,2025/01 ,18660
 Parana,2025/01 ,1092
@@ -1451,16 +1424,16 @@ Rondonia,2025/02 ,31
 Roraima,2025/02 ,5
 Tocantins,2025/02 ,60
 Espirito Santo,2025/02 ,1775
-Minas Gerais,2025/02 ,3503
+Minas Gerais,2025/02 ,3501
 Rio De Janeiro,2025/02 ,702
 Sao Paulo,2025/02 ,22850
 Parana,2025/02 ,1364
 Rio Grande Do Sul,2025/02 ,161
 Santa Catarina,2025/02 ,290
-Distrito Federal,2025/03 ,280
+Distrito Federal,2025/03 ,281
 Goias,2025/03 ,2506
 Mato Grosso,2025/03 ,2036
-Mato Grosso Do Sul,2025/03 ,262
+Mato Grosso Do Sul,2025/03 ,257
 Alagoas,2025/03 ,57
 Bahia,2025/03 ,672
 Ceara,2025/03 ,66
@@ -1478,26 +1451,26 @@ Rondonia,2025/03 ,30
 Roraima,2025/03 ,6
 Tocantins,2025/03 ,57
 Espirito Santo,2025/03 ,1861
-Minas Gerais,2025/03 ,4613
+Minas Gerais,2025/03 ,4611
 Rio De Janeiro,2025/03 ,741
 Sao Paulo,2025/03 ,26473
-Parana,2025/03 ,1602
+Parana,2025/03 ,1603
 Rio Grande Do Sul,2025/03 ,176
-Santa Catarina,2025/03 ,266
+Santa Catarina,2025/03 ,265
 Distrito Federal,2025/04 ,310
-Goias,2025/04 ,3149
+Goias,2025/04 ,3150
 Mato Grosso,2025/04 ,2185
 Mato Grosso Do Sul,2025/04 ,272
 Alagoas,2025/04 ,44
-Bahia,2025/04 ,876
-Ceara,2025/04 ,64
+Bahia,2025/04 ,879
+Ceara,2025/04 ,66
 Maranhao,2025/04 ,89
 Paraiba,2025/04 ,159
 Pernambuco,2025/04 ,227
 Piaui,2025/04 ,127
 Rio Grande Do Norte,2025/04 ,119
 Sergipe,2025/04 ,8
-Acre,2025/04 ,611
+Acre,2025/04 ,612
 Amapa,2025/04 ,109
 Amazonas,2025/04 ,180
 Para,2025/04 ,664
@@ -1505,21 +1478,21 @@ Rondonia,2025/04 ,61
 Roraima,2025/04 ,5
 Tocantins,2025/04 ,95
 Espirito Santo,2025/04 ,1976
-Minas Gerais,2025/04 ,5964
+Minas Gerais,2025/04 ,5958
 Rio De Janeiro,2025/04 ,924
-Sao Paulo,2025/04 ,32136
+Sao Paulo,2025/04 ,32141
 Parana,2025/04 ,1959
 Rio Grande Do Sul,2025/04 ,213
 Santa Catarina,2025/04 ,341
 Distrito Federal,2025/05 ,330
-Goias,2025/05 ,3637
+Goias,2025/05 ,3634
 Mato Grosso,2025/05 ,1960
-Mato Grosso Do Sul,2025/05 ,330
+Mato Grosso Do Sul,2025/05 ,323
 Alagoas,2025/05 ,56
-Bahia,2025/05 ,776
-Ceara,2025/05 ,69
+Bahia,2025/05 ,777
+Ceara,2025/05 ,66
 Maranhao,2025/05 ,108
-Paraiba,2025/05 ,165
+Paraiba,2025/05 ,164
 Pernambuco,2025/05 ,249
 Piaui,2025/05 ,146
 Rio Grande Do Norte,2025/05 ,121
@@ -1531,108 +1504,108 @@ Para,2025/05 ,736
 Rondonia,2025/05 ,95
 Roraima,2025/05 ,10
 Tocantins,2025/05 ,73
-Espirito Santo,2025/05 ,1830
-Minas Gerais,2025/05 ,6399
+Espirito Santo,2025/05 ,1818
+Minas Gerais,2025/05 ,6394
 Rio De Janeiro,2025/05 ,1211
-Sao Paulo,2025/05 ,35689
+Sao Paulo,2025/05 ,35675
 Parana,2025/05 ,2179
-Rio Grande Do Sul,2025/05 ,223
+Rio Grande Do Sul,2025/05 ,224
 Santa Catarina,2025/05 ,316
 Distrito Federal,2025/06 ,411
-Goias,2025/06 ,3919
+Goias,2025/06 ,3913
 Mato Grosso,2025/06 ,1778
 Mato Grosso Do Sul,2025/06 ,340
 Alagoas,2025/06 ,79
-Bahia,2025/06 ,964
-Ceara,2025/06 ,96
+Bahia,2025/06 ,966
+Ceara,2025/06 ,77
 Maranhao,2025/06 ,158
 Paraiba,2025/06 ,205
 Pernambuco,2025/06 ,314
 Piaui,2025/06 ,172
 Rio Grande Do Norte,2025/06 ,113
 Sergipe,2025/06 ,12
-Acre,2025/06 ,665
+Acre,2025/06 ,670
 Amapa,2025/06 ,127
-Amazonas,2025/06 ,167
-Para,2025/06 ,851
-Rondonia,2025/06 ,162
+Amazonas,2025/06 ,168
+Para,2025/06 ,853
+Rondonia,2025/06 ,163
 Roraima,2025/06 ,6
 Tocantins,2025/06 ,88
-Espirito Santo,2025/06 ,1479
-Minas Gerais,2025/06 ,7093
+Espirito Santo,2025/06 ,1468
+Minas Gerais,2025/06 ,7100
 Rio De Janeiro,2025/06 ,1771
-Sao Paulo,2025/06 ,34917
+Sao Paulo,2025/06 ,34916
 Parana,2025/06 ,2394
-Rio Grande Do Sul,2025/06 ,264
+Rio Grande Do Sul,2025/06 ,265
 Santa Catarina,2025/06 ,325
 Distrito Federal,2025/07 ,373
-Goias,2025/07 ,4035
+Goias,2025/07 ,4034
 Mato Grosso,2025/07 ,1759
 Mato Grosso Do Sul,2025/07 ,406
 Alagoas,2025/07 ,79
 Bahia,2025/07 ,1064
-Ceara,2025/07 ,98
-Maranhao,2025/07 ,174
+Ceara,2025/07 ,93
+Maranhao,2025/07 ,175
 Paraiba,2025/07 ,298
 Pernambuco,2025/07 ,326
 Piaui,2025/07 ,227
 Rio Grande Do Norte,2025/07 ,144
 Sergipe,2025/07 ,14
-Acre,2025/07 ,586
+Acre,2025/07 ,584
 Amapa,2025/07 ,137
 Amazonas,2025/07 ,189
 Para,2025/07 ,929
 Rondonia,2025/07 ,117
 Roraima,2025/07 ,12
 Tocantins,2025/07 ,145
-Espirito Santo,2025/07 ,1219
-Minas Gerais,2025/07 ,8030
+Espirito Santo,2025/07 ,1218
+Minas Gerais,2025/07 ,8012
 Rio De Janeiro,2025/07 ,2074
-Sao Paulo,2025/07 ,40192
+Sao Paulo,2025/07 ,40188
 Parana,2025/07 ,3513
 Rio Grande Do Sul,2025/07 ,385
 Santa Catarina,2025/07 ,363
-Distrito Federal,2025/08 ,414
+Distrito Federal,2025/08 ,415
 Goias,2025/08 ,3858
 Mato Grosso,2025/08 ,1628
 Mato Grosso Do Sul,2025/08 ,426
 Alagoas,2025/08 ,84
 Bahia,2025/08 ,1091
-Ceara,2025/08 ,94
-Maranhao,2025/08 ,296
-Paraiba,2025/08 ,357
-Pernambuco,2025/08 ,408
+Ceara,2025/08 ,93
+Maranhao,2025/08 ,297
+Paraiba,2025/08 ,349
+Pernambuco,2025/08 ,410
 Piaui,2025/08 ,235
 Rio Grande Do Norte,2025/08 ,157
 Sergipe,2025/08 ,8
-Acre,2025/08 ,620
+Acre,2025/08 ,611
 Amapa,2025/08 ,144
 Amazonas,2025/08 ,198
 Para,2025/08 ,776
 Rondonia,2025/08 ,61
 Roraima,2025/08 ,4
-Tocantins,2025/08 ,122
-Espirito Santo,2025/08 ,1355
-Minas Gerais,2025/08 ,8808
+Tocantins,2025/08 ,121
+Espirito Santo,2025/08 ,1347
+Minas Gerais,2025/08 ,8786
 Rio De Janeiro,2025/08 ,1731
-Sao Paulo,2025/08 ,45349
-Parana,2025/08 ,4549
-Rio Grande Do Sul,2025/08 ,635
+Sao Paulo,2025/08 ,45356
+Parana,2025/08 ,4547
+Rio Grande Do Sul,2025/08 ,634
 Santa Catarina,2025/08 ,481
 Distrito Federal,2025/09 ,352
-Goias,2025/09 ,3362
+Goias,2025/09 ,3360
 Mato Grosso,2025/09 ,1115
-Mato Grosso Do Sul,2025/09 ,455
+Mato Grosso Do Sul,2025/09 ,454
 Alagoas,2025/09 ,69
 Bahia,2025/09 ,907
 Ceara,2025/09 ,71
 Maranhao,2025/09 ,194
 Paraiba,2025/09 ,163
-Pernambuco,2025/09 ,287
-Piaui,2025/09 ,230
+Pernambuco,2025/09 ,288
+Piaui,2025/09 ,231
 Rio Grande Do Norte,2025/09 ,157
 Sergipe,2025/09 ,11
-Acre,2025/09 ,560
+Acre,2025/09 ,551
 Amapa,2025/09 ,104
 Amazonas,2025/09 ,169
 Para,2025/09 ,658
@@ -1640,51 +1613,51 @@ Rondonia,2025/09 ,110
 Roraima,2025/09 ,10
 Tocantins,2025/09 ,87
 Espirito Santo,2025/09 ,929
-Minas Gerais,2025/09 ,7581
+Minas Gerais,2025/09 ,7600
 Rio De Janeiro,2025/09 ,1184
-Sao Paulo,2025/09 ,47104
-Parana,2025/09 ,5071
+Sao Paulo,2025/09 ,47140
+Parana,2025/09 ,5067
 Rio Grande Do Sul,2025/09 ,812
 Santa Catarina,2025/09 ,547
 Distrito Federal,2025/10 ,354
-Goias,2025/10 ,3255
-Mato Grosso,2025/10 ,1128
+Goias,2025/10 ,3252
+Mato Grosso,2025/10 ,1129
 Mato Grosso Do Sul,2025/10 ,561
 Alagoas,2025/10 ,66
 Bahia,2025/10 ,967
-Ceara,2025/10 ,94
-Maranhao,2025/10 ,201
-Paraiba,2025/10 ,168
+Ceara,2025/10 ,93
+Maranhao,2025/10 ,202
+Paraiba,2025/10 ,166
 Pernambuco,2025/10 ,310
 Piaui,2025/10 ,259
-Rio Grande Do Norte,2025/10 ,152
+Rio Grande Do Norte,2025/10 ,151
 Sergipe,2025/10 ,7
 Acre,2025/10 ,348
 Amapa,2025/10 ,79
 Amazonas,2025/10 ,212
-Para,2025/10 ,667
+Para,2025/10 ,668
 Rondonia,2025/10 ,157
 Roraima,2025/10 ,10
 Tocantins,2025/10 ,91
 Espirito Santo,2025/10 ,834
-Minas Gerais,2025/10 ,7379
-Rio De Janeiro,2025/10 ,1316
-Sao Paulo,2025/10 ,53244
-Parana,2025/10 ,6120
-Rio Grande Do Sul,2025/10 ,1134
+Minas Gerais,2025/10 ,7418
+Rio De Janeiro,2025/10 ,1315
+Sao Paulo,2025/10 ,53287
+Parana,2025/10 ,6121
+Rio Grande Do Sul,2025/10 ,1133
 Santa Catarina,2025/10 ,741
 Distrito Federal,2025/11 ,378
-Goias,2025/11 ,3711
-Mato Grosso,2025/11 ,1110
+Goias,2025/11 ,3706
+Mato Grosso,2025/11 ,1111
 Mato Grosso Do Sul,2025/11 ,592
 Alagoas,2025/11 ,78
-Bahia,2025/11 ,1174
+Bahia,2025/11 ,1173
 Ceara,2025/11 ,143
-Maranhao,2025/11 ,267
-Paraiba,2025/11 ,221
+Maranhao,2025/11 ,266
+Paraiba,2025/11 ,219
 Pernambuco,2025/11 ,474
 Piaui,2025/11 ,268
-Rio Grande Do Norte,2025/11 ,245
+Rio Grande Do Norte,2025/11 ,244
 Sergipe,2025/11 ,12
 Acre,2025/11 ,452
 Amapa,2025/11 ,68
@@ -1694,48 +1667,48 @@ Rondonia,2025/11 ,217
 Roraima,2025/11 ,12
 Tocantins,2025/11 ,94
 Espirito Santo,2025/11 ,913
-Minas Gerais,2025/11 ,8619
+Minas Gerais,2025/11 ,8597
 Rio De Janeiro,2025/11 ,1348
-Sao Paulo,2025/11 ,56850
-Parana,2025/11 ,7073
+Sao Paulo,2025/11 ,56878
+Parana,2025/11 ,7070
 Rio Grande Do Sul,2025/11 ,2079
 Santa Catarina,2025/11 ,1008
-Distrito Federal,2025/12 ,346
-Goias,2025/12 ,3540
-Mato Grosso,2025/12 ,1073
+Distrito Federal,2025/12 ,345
+Goias,2025/12 ,3533
+Mato Grosso,2025/12 ,1071
 Mato Grosso Do Sul,2025/12 ,755
 Alagoas,2025/12 ,105
 Bahia,2025/12 ,1178
 Ceara,2025/12 ,172
 Maranhao,2025/12 ,349
-Paraiba,2025/12 ,197
-Pernambuco,2025/12 ,542
+Paraiba,2025/12 ,196
+Pernambuco,2025/12 ,544
 Piaui,2025/12 ,371
-Rio Grande Do Norte,2025/12 ,229
+Rio Grande Do Norte,2025/12 ,228
 Sergipe,2025/12 ,13
 Acre,2025/12 ,461
 Amapa,2025/12 ,66
 Amazonas,2025/12 ,178
 Para,2025/12 ,686
-Rondonia,2025/12 ,266
+Rondonia,2025/12 ,264
 Roraima,2025/12 ,9
 Tocantins,2025/12 ,100
 Espirito Santo,2025/12 ,904
-Minas Gerais,2025/12 ,8717
+Minas Gerais,2025/12 ,8742
 Rio De Janeiro,2025/12 ,1307
-Sao Paulo,2025/12 ,58715
-Parana,2025/12 ,7678
+Sao Paulo,2025/12 ,58723
+Parana,2025/12 ,7692
 Rio Grande Do Sul,2025/12 ,2688
 Santa Catarina,2025/12 ,1206
 Distrito Federal,2025/13 ,334
-Goias,2025/13 ,3600
-Mato Grosso,2025/13 ,1106
-Mato Grosso Do Sul,2025/13 ,725
+Goias,2025/13 ,3595
+Mato Grosso,2025/13 ,1096
+Mato Grosso Do Sul,2025/13 ,724
 Alagoas,2025/13 ,164
-Bahia,2025/13 ,1197
+Bahia,2025/13 ,1198
 Ceara,2025/13 ,210
 Maranhao,2025/13 ,319
-Paraiba,2025/13 ,190
+Paraiba,2025/13 ,189
 Pernambuco,2025/13 ,584
 Piaui,2025/13 ,338
 Rio Grande Do Norte,2025/13 ,243
@@ -1748,50 +1721,50 @@ Rondonia,2025/13 ,376
 Roraima,2025/13 ,6
 Tocantins,2025/13 ,83
 Espirito Santo,2025/13 ,866
-Minas Gerais,2025/13 ,8662
+Minas Gerais,2025/13 ,8669
 Rio De Janeiro,2025/13 ,1195
-Sao Paulo,2025/13 ,53571
-Parana,2025/13 ,8105
+Sao Paulo,2025/13 ,53616
+Parana,2025/13 ,8099
 Rio Grande Do Sul,2025/13 ,4785
-Santa Catarina,2025/13 ,1340
-Distrito Federal,2025/14 ,303
-Goias,2025/14 ,3727
-Mato Grosso,2025/14 ,1000
-Mato Grosso Do Sul,2025/14 ,771
-Alagoas,2025/14 ,135
-Bahia,2025/14 ,1217
+Santa Catarina,2025/13 ,1339
+Distrito Federal,2025/14 ,302
+Goias,2025/14 ,3719
+Mato Grosso,2025/14 ,961
+Mato Grosso Do Sul,2025/14 ,772
+Alagoas,2025/14 ,136
+Bahia,2025/14 ,1216
 Ceara,2025/14 ,220
-Maranhao,2025/14 ,335
-Paraiba,2025/14 ,219
-Pernambuco,2025/14 ,604
-Piaui,2025/14 ,417
-Rio Grande Do Norte,2025/14 ,273
+Maranhao,2025/14 ,336
+Paraiba,2025/14 ,215
+Pernambuco,2025/14 ,598
+Piaui,2025/14 ,416
+Rio Grande Do Norte,2025/14 ,274
 Sergipe,2025/14 ,11
 Acre,2025/14 ,234
 Amapa,2025/14 ,55
 Amazonas,2025/14 ,231
-Para,2025/14 ,610
+Para,2025/14 ,611
 Rondonia,2025/14 ,321
 Roraima,2025/14 ,10
-Tocantins,2025/14 ,118
+Tocantins,2025/14 ,117
 Espirito Santo,2025/14 ,916
-Minas Gerais,2025/14 ,8691
-Rio De Janeiro,2025/14 ,1361
-Sao Paulo,2025/14 ,51367
-Parana,2025/14 ,8565
-Rio Grande Do Sul,2025/14 ,6743
-Santa Catarina,2025/14 ,1863
+Minas Gerais,2025/14 ,8659
+Rio De Janeiro,2025/14 ,1362
+Sao Paulo,2025/14 ,51448
+Parana,2025/14 ,8564
+Rio Grande Do Sul,2025/14 ,6746
+Santa Catarina,2025/14 ,1866
 Distrito Federal,2025/15 ,251
 Goias,2025/15 ,3480
-Mato Grosso,2025/15 ,1098
-Mato Grosso Do Sul,2025/15 ,822
+Mato Grosso,2025/15 ,1097
+Mato Grosso Do Sul,2025/15 ,835
 Alagoas,2025/15 ,112
-Bahia,2025/15 ,1137
-Ceara,2025/15 ,235
-Maranhao,2025/15 ,246
-Paraiba,2025/15 ,245
-Pernambuco,2025/15 ,707
-Piaui,2025/15 ,421
+Bahia,2025/15 ,1135
+Ceara,2025/15 ,234
+Maranhao,2025/15 ,245
+Paraiba,2025/15 ,241
+Pernambuco,2025/15 ,701
+Piaui,2025/15 ,424
 Rio Grande Do Norte,2025/15 ,275
 Sergipe,2025/15 ,14
 Acre,2025/15 ,178
@@ -1802,279 +1775,279 @@ Rondonia,2025/15 ,142
 Roraima,2025/15 ,11
 Tocantins,2025/15 ,108
 Espirito Santo,2025/15 ,866
-Minas Gerais,2025/15 ,7923
+Minas Gerais,2025/15 ,7864
 Rio De Janeiro,2025/15 ,1390
-Sao Paulo,2025/15 ,44942
-Parana,2025/15 ,7488
-Rio Grande Do Sul,2025/15 ,6883
-Santa Catarina,2025/15 ,1940
+Sao Paulo,2025/15 ,45048
+Parana,2025/15 ,7478
+Rio Grande Do Sul,2025/15 ,6896
+Santa Catarina,2025/15 ,1946
 Distrito Federal,2025/16 ,266
-Goias,2025/16 ,3469
-Mato Grosso,2025/16 ,836
-Mato Grosso Do Sul,2025/16 ,758
-Alagoas,2025/16 ,131
-Bahia,2025/16 ,929
-Ceara,2025/16 ,191
+Goias,2025/16 ,3461
+Mato Grosso,2025/16 ,855
+Mato Grosso Do Sul,2025/16 ,755
+Alagoas,2025/16 ,130
+Bahia,2025/16 ,928
+Ceara,2025/16 ,192
 Maranhao,2025/16 ,165
-Paraiba,2025/16 ,263
-Pernambuco,2025/16 ,717
-Piaui,2025/16 ,351
+Paraiba,2025/16 ,261
+Pernambuco,2025/16 ,707
+Piaui,2025/16 ,350
 Rio Grande Do Norte,2025/16 ,254
 Sergipe,2025/16 ,12
 Acre,2025/16 ,203
 Amapa,2025/16 ,53
 Amazonas,2025/16 ,156
-Para,2025/16 ,479
-Rondonia,2025/16 ,126
+Para,2025/16 ,474
+Rondonia,2025/16 ,123
 Roraima,2025/16 ,23
 Tocantins,2025/16 ,134
 Espirito Santo,2025/16 ,868
-Minas Gerais,2025/16 ,6922
+Minas Gerais,2025/16 ,6902
 Rio De Janeiro,2025/16 ,1152
-Sao Paulo,2025/16 ,37253
-Parana,2025/16 ,5981
-Rio Grande Do Sul,2025/16 ,7114
-Santa Catarina,2025/16 ,1857
-Distrito Federal,2025/17 ,339
-Goias,2025/17 ,4114
-Mato Grosso,2025/17 ,1084
-Mato Grosso Do Sul,2025/17 ,761
+Sao Paulo,2025/16 ,37285
+Parana,2025/16 ,5978
+Rio Grande Do Sul,2025/16 ,7122
+Santa Catarina,2025/16 ,1871
+Distrito Federal,2025/17 ,334
+Goias,2025/17 ,4094
+Mato Grosso,2025/17 ,1082
+Mato Grosso Do Sul,2025/17 ,754
 Alagoas,2025/17 ,200
-Bahia,2025/17 ,1392
-Ceara,2025/17 ,244
-Maranhao,2025/17 ,234
+Bahia,2025/17 ,1395
+Ceara,2025/17 ,249
+Maranhao,2025/17 ,233
 Paraiba,2025/17 ,300
-Pernambuco,2025/17 ,720
-Piaui,2025/17 ,400
+Pernambuco,2025/17 ,712
+Piaui,2025/17 ,403
 Rio Grande Do Norte,2025/17 ,352
-Sergipe,2025/17 ,32
+Sergipe,2025/17 ,30
 Acre,2025/17 ,190
-Amapa,2025/17 ,38
+Amapa,2025/17 ,40
 Amazonas,2025/17 ,161
-Para,2025/17 ,516
-Rondonia,2025/17 ,131
+Para,2025/17 ,519
+Rondonia,2025/17 ,130
 Roraima,2025/17 ,16
 Tocantins,2025/17 ,164
 Espirito Santo,2025/17 ,887
-Minas Gerais,2025/17 ,8368
-Rio De Janeiro,2025/17 ,1276
-Sao Paulo,2025/17 ,38966
-Parana,2025/17 ,6526
+Minas Gerais,2025/17 ,8301
+Rio De Janeiro,2025/17 ,1273
+Sao Paulo,2025/17 ,38991
+Parana,2025/17 ,6498
 Rio Grande Do Sul,2025/17 ,8849
-Santa Catarina,2025/17 ,2220
-Distrito Federal,2025/18 ,344
-Goias,2025/18 ,4379
-Mato Grosso,2025/18 ,1115
-Mato Grosso Do Sul,2025/18 ,684
-Alagoas,2025/18 ,148
-Bahia,2025/18 ,1227
-Ceara,2025/18 ,327
+Santa Catarina,2025/17 ,2233
+Distrito Federal,2025/18 ,338
+Goias,2025/18 ,4354
+Mato Grosso,2025/18 ,1106
+Mato Grosso Do Sul,2025/18 ,679
+Alagoas,2025/18 ,146
+Bahia,2025/18 ,1219
+Ceara,2025/18 ,322
 Maranhao,2025/18 ,263
-Paraiba,2025/18 ,237
-Pernambuco,2025/18 ,625
-Piaui,2025/18 ,384
+Paraiba,2025/18 ,232
+Pernambuco,2025/18 ,617
+Piaui,2025/18 ,382
 Rio Grande Do Norte,2025/18 ,404
-Sergipe,2025/18 ,58
+Sergipe,2025/18 ,46
 Acre,2025/18 ,174
 Amapa,2025/18 ,41
 Amazonas,2025/18 ,123
-Para,2025/18 ,441
-Rondonia,2025/18 ,148
+Para,2025/18 ,447
+Rondonia,2025/18 ,147
 Roraima,2025/18 ,20
-Tocantins,2025/18 ,194
+Tocantins,2025/18 ,195
 Espirito Santo,2025/18 ,830
-Minas Gerais,2025/18 ,7509
-Rio De Janeiro,2025/18 ,1152
-Sao Paulo,2025/18 ,32667
-Parana,2025/18 ,5697
-Rio Grande Do Sul,2025/18 ,7857
-Santa Catarina,2025/18 ,1958
-Distrito Federal,2025/19 ,398
-Goias,2025/19 ,4909
-Mato Grosso,2025/19 ,1563
-Mato Grosso Do Sul,2025/19 ,705
-Alagoas,2025/19 ,152
+Minas Gerais,2025/18 ,7482
+Rio De Janeiro,2025/18 ,1134
+Sao Paulo,2025/18 ,32700
+Parana,2025/18 ,5662
+Rio Grande Do Sul,2025/18 ,7845
+Santa Catarina,2025/18 ,1972
+Distrito Federal,2025/19 ,395
+Goias,2025/19 ,4921
+Mato Grosso,2025/19 ,1575
+Mato Grosso Do Sul,2025/19 ,686
+Alagoas,2025/19 ,151
 Bahia,2025/19 ,1254
-Ceara,2025/19 ,390
+Ceara,2025/19 ,383
 Maranhao,2025/19 ,321
-Paraiba,2025/19 ,271
-Pernambuco,2025/19 ,694
-Piaui,2025/19 ,440
+Paraiba,2025/19 ,268
+Pernambuco,2025/19 ,691
+Piaui,2025/19 ,439
 Rio Grande Do Norte,2025/19 ,483
-Sergipe,2025/19 ,70
+Sergipe,2025/19 ,65
 Acre,2025/19 ,201
 Amapa,2025/19 ,49
 Amazonas,2025/19 ,151
-Para,2025/19 ,466
-Rondonia,2025/19 ,132
+Para,2025/19 ,457
+Rondonia,2025/19 ,130
 Roraima,2025/19 ,19
-Tocantins,2025/19 ,210
-Espirito Santo,2025/19 ,1030
-Minas Gerais,2025/19 ,7542
-Rio De Janeiro,2025/19 ,1251
-Sao Paulo,2025/19 ,29885
-Parana,2025/19 ,5670
-Rio Grande Do Sul,2025/19 ,7880
-Santa Catarina,2025/19 ,1873
-Distrito Federal,2025/20 ,290
-Goias,2025/20 ,4431
-Mato Grosso,2025/20 ,1478
-Mato Grosso Do Sul,2025/20 ,729
-Alagoas,2025/20 ,115
-Bahia,2025/20 ,1160
-Ceara,2025/20 ,442
-Maranhao,2025/20 ,263
-Paraiba,2025/20 ,216
-Pernambuco,2025/20 ,574
-Piaui,2025/20 ,349
-Rio Grande Do Norte,2025/20 ,336
-Sergipe,2025/20 ,71
+Tocantins,2025/19 ,202
+Espirito Santo,2025/19 ,1029
+Minas Gerais,2025/19 ,7530
+Rio De Janeiro,2025/19 ,1232
+Sao Paulo,2025/19 ,29911
+Parana,2025/19 ,5567
+Rio Grande Do Sul,2025/19 ,7883
+Santa Catarina,2025/19 ,1878
+Distrito Federal,2025/20 ,288
+Goias,2025/20 ,4442
+Mato Grosso,2025/20 ,1526
+Mato Grosso Do Sul,2025/20 ,709
+Alagoas,2025/20 ,113
+Bahia,2025/20 ,1165
+Ceara,2025/20 ,439
+Maranhao,2025/20 ,262
+Paraiba,2025/20 ,213
+Pernambuco,2025/20 ,580
+Piaui,2025/20 ,347
+Rio Grande Do Norte,2025/20 ,337
+Sergipe,2025/20 ,70
 Acre,2025/20 ,227
 Amapa,2025/20 ,50
-Amazonas,2025/20 ,131
-Para,2025/20 ,476
-Rondonia,2025/20 ,194
+Amazonas,2025/20 ,132
+Para,2025/20 ,472
+Rondonia,2025/20 ,188
 Roraima,2025/20 ,20
-Tocantins,2025/20 ,257
-Espirito Santo,2025/20 ,920
-Minas Gerais,2025/20 ,6491
-Rio De Janeiro,2025/20 ,1196
-Sao Paulo,2025/20 ,24880
-Parana,2025/20 ,5180
-Rio Grande Do Sul,2025/20 ,8238
-Santa Catarina,2025/20 ,1776
+Tocantins,2025/20 ,233
+Espirito Santo,2025/20 ,919
+Minas Gerais,2025/20 ,6454
+Rio De Janeiro,2025/20 ,1193
+Sao Paulo,2025/20 ,24724
+Parana,2025/20 ,5072
+Rio Grande Do Sul,2025/20 ,8230
+Santa Catarina,2025/20 ,1760
 Distrito Federal,2025/21 ,289
-Goias,2025/21 ,4016
-Mato Grosso,2025/21 ,1461
-Mato Grosso Do Sul,2025/21 ,855
+Goias,2025/21 ,4046
+Mato Grosso,2025/21 ,1468
+Mato Grosso Do Sul,2025/21 ,819
 Alagoas,2025/21 ,122
-Bahia,2025/21 ,1220
-Ceara,2025/21 ,386
-Maranhao,2025/21 ,211
-Paraiba,2025/21 ,225
-Pernambuco,2025/21 ,598
-Piaui,2025/21 ,316
-Rio Grande Do Norte,2025/21 ,312
-Sergipe,2025/21 ,71
-Acre,2025/21 ,140
-Amapa,2025/21 ,37
-Amazonas,2025/21 ,141
-Para,2025/21 ,444
-Rondonia,2025/21 ,132
+Bahia,2025/21 ,1215
+Ceara,2025/21 ,384
+Maranhao,2025/21 ,212
+Paraiba,2025/21 ,224
+Pernambuco,2025/21 ,595
+Piaui,2025/21 ,313
+Rio Grande Do Norte,2025/21 ,313
+Sergipe,2025/21 ,69
+Acre,2025/21 ,141
+Amapa,2025/21 ,39
+Amazonas,2025/21 ,142
+Para,2025/21 ,445
+Rondonia,2025/21 ,124
 Roraima,2025/21 ,21
-Tocantins,2025/21 ,179
-Espirito Santo,2025/21 ,865
-Minas Gerais,2025/21 ,5029
-Rio De Janeiro,2025/21 ,997
-Sao Paulo,2025/21 ,20573
-Parana,2025/21 ,4879
-Rio Grande Do Sul,2025/21 ,7358
-Santa Catarina,2025/21 ,1688
-Distrito Federal,2025/22 ,246
-Goias,2025/22 ,2968
-Mato Grosso,2025/22 ,1106
-Mato Grosso Do Sul,2025/22 ,686
-Alagoas,2025/22 ,117
-Bahia,2025/22 ,947
-Ceara,2025/22 ,325
-Maranhao,2025/22 ,169
-Paraiba,2025/22 ,207
+Tocantins,2025/21 ,168
+Espirito Santo,2025/21 ,866
+Minas Gerais,2025/21 ,5018
+Rio De Janeiro,2025/21 ,988
+Sao Paulo,2025/21 ,20472
+Parana,2025/21 ,4843
+Rio Grande Do Sul,2025/21 ,7344
+Santa Catarina,2025/21 ,1679
+Distrito Federal,2025/22 ,245
+Goias,2025/22 ,2976
+Mato Grosso,2025/22 ,1113
+Mato Grosso Do Sul,2025/22 ,678
+Alagoas,2025/22 ,118
+Bahia,2025/22 ,949
+Ceara,2025/22 ,318
+Maranhao,2025/22 ,170
+Paraiba,2025/22 ,197
 Pernambuco,2025/22 ,570
-Piaui,2025/22 ,264
-Rio Grande Do Norte,2025/22 ,278
-Sergipe,2025/22 ,84
+Piaui,2025/22 ,262
+Rio Grande Do Norte,2025/22 ,277
+Sergipe,2025/22 ,82
 Acre,2025/22 ,172
-Amapa,2025/22 ,21
+Amapa,2025/22 ,26
 Amazonas,2025/22 ,126
-Para,2025/22 ,432
-Rondonia,2025/22 ,107
+Para,2025/22 ,430
+Rondonia,2025/22 ,103
 Roraima,2025/22 ,24
-Tocantins,2025/22 ,193
-Espirito Santo,2025/22 ,746
-Minas Gerais,2025/22 ,3782
-Rio De Janeiro,2025/22 ,818
-Sao Paulo,2025/22 ,14755
-Parana,2025/22 ,3469
-Rio Grande Do Sul,2025/22 ,3982
-Santa Catarina,2025/22 ,1549
-Distrito Federal,2025/23 ,206
-Goias,2025/23 ,2604
-Mato Grosso,2025/23 ,1009
-Mato Grosso Do Sul,2025/23 ,553
-Alagoas,2025/23 ,159
-Bahia,2025/23 ,826
-Ceara,2025/23 ,296
-Maranhao,2025/23 ,218
-Paraiba,2025/23 ,233
-Pernambuco,2025/23 ,580
+Tocantins,2025/22 ,174
+Espirito Santo,2025/22 ,744
+Minas Gerais,2025/22 ,3800
+Rio De Janeiro,2025/22 ,813
+Sao Paulo,2025/22 ,14880
+Parana,2025/22 ,3460
+Rio Grande Do Sul,2025/22 ,3972
+Santa Catarina,2025/22 ,1231
+Distrito Federal,2025/23 ,205
+Goias,2025/23 ,2617
+Mato Grosso,2025/23 ,1012
+Mato Grosso Do Sul,2025/23 ,563
+Alagoas,2025/23 ,161
+Bahia,2025/23 ,839
+Ceara,2025/23 ,291
+Maranhao,2025/23 ,223
+Paraiba,2025/23 ,223
+Pernambuco,2025/23 ,597
 Piaui,2025/23 ,169
 Rio Grande Do Norte,2025/23 ,230
-Sergipe,2025/23 ,116
+Sergipe,2025/23 ,115
 Acre,2025/23 ,204
-Amapa,2025/23 ,29
-Amazonas,2025/23 ,124
-Para,2025/23 ,409
-Rondonia,2025/23 ,113
+Amapa,2025/23 ,37
+Amazonas,2025/23 ,126
+Para,2025/23 ,424
+Rondonia,2025/23 ,105
 Roraima,2025/23 ,25
-Tocantins,2025/23 ,212
-Espirito Santo,2025/23 ,805
-Minas Gerais,2025/23 ,3314
-Rio De Janeiro,2025/23 ,647
-Sao Paulo,2025/23 ,10281
-Parana,2025/23 ,2376
-Rio Grande Do Sul,2025/23 ,2840
-Santa Catarina,2025/23 ,1302
-Distrito Federal,2025/24 ,194
-Goias,2025/24 ,2022
-Mato Grosso,2025/24 ,891
-Mato Grosso Do Sul,2025/24 ,509
-Alagoas,2025/24 ,138
-Bahia,2025/24 ,575
-Ceara,2025/24 ,293
-Maranhao,2025/24 ,114
-Paraiba,2025/24 ,235
-Pernambuco,2025/24 ,399
-Piaui,2025/24 ,146
-Rio Grande Do Norte,2025/24 ,239
-Sergipe,2025/24 ,107
+Tocantins,2025/23 ,195
+Espirito Santo,2025/23 ,778
+Minas Gerais,2025/23 ,3356
+Rio De Janeiro,2025/23 ,636
+Sao Paulo,2025/23 ,10356
+Parana,2025/23 ,2335
+Rio Grande Do Sul,2025/23 ,2828
+Santa Catarina,2025/23 ,1291
+Distrito Federal,2025/24 ,198
+Goias,2025/24 ,2117
+Mato Grosso,2025/24 ,877
+Mato Grosso Do Sul,2025/24 ,525
+Alagoas,2025/24 ,151
+Bahia,2025/24 ,609
+Ceara,2025/24 ,288
+Maranhao,2025/24 ,130
+Paraiba,2025/24 ,192
+Pernambuco,2025/24 ,448
+Piaui,2025/24 ,149
+Rio Grande Do Norte,2025/24 ,246
+Sergipe,2025/24 ,114
 Acre,2025/24 ,223
-Amapa,2025/24 ,5
-Amazonas,2025/24 ,108
-Para,2025/24 ,277
-Rondonia,2025/24 ,56
-Roraima,2025/24 ,28
-Tocantins,2025/24 ,171
-Espirito Santo,2025/24 ,741
-Minas Gerais,2025/24 ,1971
-Rio De Janeiro,2025/24 ,406
-Sao Paulo,2025/24 ,6814
-Parana,2025/24 ,1935
-Rio Grande Do Sul,2025/24 ,1778
-Santa Catarina,2025/24 ,1013
-Distrito Federal,2025/25 ,159
-Goias,2025/25 ,1013
-Mato Grosso,2025/25 ,401
-Mato Grosso Do Sul,2025/25 ,387
-Alagoas,2025/25 ,48
-Bahia,2025/25 ,130
-Ceara,2025/25 ,153
-Maranhao,2025/25 ,42
-Paraiba,2025/25 ,113
-Pernambuco,2025/25 ,165
-Piaui,2025/25 ,83
-Rio Grande Do Norte,2025/25 ,141
-Sergipe,2025/25 ,41
-Acre,2025/25 ,125
-Amapa,2025/25 ,3
-Amazonas,2025/25 ,102
-Para,2025/25 ,97
-Rondonia,2025/25 ,19
-Roraima,2025/25 ,35
-Tocantins,2025/25 ,155
-Espirito Santo,2025/25 ,601
-Minas Gerais,2025/25 ,837
-Rio De Janeiro,2025/25 ,306
-Sao Paulo,2025/25 ,3988
-Parana,2025/25 ,1468
-Rio Grande Do Sul,2025/25 ,836
-Santa Catarina,2025/25 ,1069
+Amapa,2025/24 ,7
+Amazonas,2025/24 ,111
+Para,2025/24 ,300
+Rondonia,2025/24 ,58
+Roraima,2025/24 ,25
+Tocantins,2025/24 ,170
+Espirito Santo,2025/24 ,718
+Minas Gerais,2025/24 ,2108
+Rio De Janeiro,2025/24 ,388
+Sao Paulo,2025/24 ,6936
+Parana,2025/24 ,1895
+Rio Grande Do Sul,2025/24 ,1773
+Santa Catarina,2025/24 ,987
+Distrito Federal,2025/25 ,170
+Goias,2025/25 ,1270
+Mato Grosso,2025/25 ,462
+Mato Grosso Do Sul,2025/25 ,416
+Alagoas,2025/25 ,83
+Bahia,2025/25 ,187
+Ceara,2025/25 ,211
+Maranhao,2025/25 ,63
+Paraiba,2025/25 ,118
+Pernambuco,2025/25 ,218
+Piaui,2025/25 ,94
+Rio Grande Do Norte,2025/25 ,161
+Sergipe,2025/25 ,55
+Acre,2025/25 ,129
+Amapa,2025/25 ,6
+Amazonas,2025/25 ,118
+Para,2025/25 ,130
+Rondonia,2025/25 ,48
+Roraima,2025/25 ,37
+Tocantins,2025/25 ,143
+Espirito Santo,2025/25 ,590
+Minas Gerais,2025/25 ,989
+Rio De Janeiro,2025/25 ,281
+Sao Paulo,2025/25 ,4270
+Parana,2025/25 ,1517
+Rio Grande Do Sul,2025/25 ,873
+Santa Catarina,2025/25 ,963

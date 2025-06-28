@@ -112,7 +112,6 @@ async function bigNumbersUF() {
         console.log(`✅ Dados salvos em ${outputPath}`);
     } catch (error) {
         console.error(`❌ Error in bigNumbersUF: ${error.message}`);
-        throw error; // Rethrow to be caught in main.js
     } finally {
         if (browser) {
             console.log("Closing browser.");
