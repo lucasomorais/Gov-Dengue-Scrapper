@@ -20,7 +20,7 @@ def normalize_key(key: str) -> str:
            .lower()
     )
 
-def update_big_numbers_uf():
+def big_numbers_uf():
     # === [1] Carrega YAML mais recente no padrão big_numbers_uf_*.yaml ===
     try:
         yaml_path = find_latest_file_in_subfolders('big_numbers_uf_*.yaml', output_dir=OUTPUT_DIR)
@@ -83,4 +83,4 @@ def update_big_numbers_uf():
     print(f"✅ Planilha atualizada: {excel_path}")
 
 if __name__ == "__main__":
-    update_big_numbers_uf()
+    big_numbers_uf()

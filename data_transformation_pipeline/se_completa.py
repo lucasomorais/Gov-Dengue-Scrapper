@@ -14,7 +14,7 @@ from modules.utils import (
     SOURCE_DIR
 )
 
-def update_se_completa():
+def se_completa():
     # === [1] Encontrar o arquivo CSV mais recente (semana_epidemiologica_*.yaml) ===
     try:
         yaml_path = find_latest_file_in_subfolders('semana_epidemiologica_*.yaml', output_dir=OUTPUT_DIR)
@@ -90,4 +90,4 @@ def update_se_completa():
     print(f"✅ Planilha '{ws.title}' atualizada a partir da linha {start_row} (Ano/Semana: {start_ano_semana})")
 
 if __name__ == "__main__":
-    update_se_completa()
+    se_completa()
