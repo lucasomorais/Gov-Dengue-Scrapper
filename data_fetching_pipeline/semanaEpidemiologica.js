@@ -122,7 +122,8 @@ async function semanaEpidemiologica() {
             }
         }
 
-        const outputDir = path.join(__dirname, '..', 'output');
+        const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '_');
+        const outputDir = path.join(__dirname, '..', 'output', `dengue_${dateStr}`);
         fs.mkdirSync(outputDir, { recursive: true });
 
         const filename = path.join(outputDir, generateDatedFilename("semana_epidemiologica", "yaml", ""));
@@ -132,7 +133,7 @@ async function semanaEpidemiologica() {
         console.log(`✅ Data saved to ${filename}`);
     } catch (error) {
         console.error(`❌ Error in semanaEpidemiologica: ${error.message}`);
-        throw error; // Rethrow to be caught in main.js
+        throw error;
     } finally {
         if (context) await context.close();
         if (browser) await browser.close();

@@ -113,14 +113,15 @@ async function SEFetcher() {
             All_Semanas_Data: cardData
         };
 
-        const outputDir = path.join(__dirname, '..', 'output');
+        const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '_');
+        const outputDir = path.join(__dirname, '..', 'output', `dengue_${dateStr}`);
         fs.mkdirSync(outputDir, { recursive: true });
         const filePath = generateDatedFilename(`SE-Y-${lastWeek}`, "yaml", outputDir);
         fs.writeFileSync(filePath, yaml.dump(semData, { noRefs: true, sortKeys: false }), 'utf8');
         console.log(`✅ Data saved to ${filePath}`);
     } catch (err) {
         console.error(`❌ Error in SEFetcher: ${err.message}`);
-        throw err; // Rethrow to be caught in main.js
+        throw err;
     } finally {
         if (browser) {
             console.log("Closing browser.");

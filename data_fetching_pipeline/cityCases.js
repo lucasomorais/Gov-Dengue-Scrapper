@@ -8,14 +8,13 @@ const path = require('path');
 async function cityCases() {
     const scriptDir = __dirname;
     const projectRoot = path.resolve(scriptDir, '..');
-    const outputDir = path.join(projectRoot, 'output');
+    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '_'); // "yyyy_mm_dd"
+    const outputDir = path.join(projectRoot, 'output', `dengue_${timestamp}`);
 
     // Ensure output directory exists
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
     }
-
-    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '_'); // "yy-mm-dd"
 
     const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({ acceptDownloads: true });
