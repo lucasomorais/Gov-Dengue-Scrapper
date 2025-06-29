@@ -9,7 +9,7 @@ from modules.utils import (
     find_latest_file_in_subfolders,
     get_latest_epidemiology_file,
     OUTPUT_DIR,
-    SOURCE_DIR
+    TEMP_DIR
 )
 
 def normalize_key(key: str) -> str:
@@ -37,11 +37,11 @@ def big_numbers_uf():
 
     # === [2] Carrega planilha mais recente ===
     try:
-        excel_path = get_latest_epidemiology_file(SOURCE_DIR)
+        excel_path = get_latest_epidemiology_file(TEMP_DIR)
         wb = openpyxl.load_workbook(excel_path)
         ws = wb["Big Numbers UF"]
     except FileNotFoundError:
-        print(f"[ERROR] Excel file not found in: {SOURCE_DIR}")
+        print(f"[ERROR] Excel file not found in: {TEMP_DIR}")
         return
     except KeyError:
         print(f"[ERROR] Sheet 'Big Numbers UF' not found in {excel_path}")

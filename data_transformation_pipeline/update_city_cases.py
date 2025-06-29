@@ -13,7 +13,7 @@ from modules.utils import (
     get_latest_epidemiology_file,
     find_latest_file_in_subfolders,
     OUTPUT_DIR,
-    SOURCE_DIR
+    TEMP_DIR
 )
 
 def update_city_cases():
@@ -25,9 +25,9 @@ def update_city_cases():
 
 
         try:
-            excel_path = get_latest_epidemiology_file(SOURCE_DIR)
+            excel_path = get_latest_epidemiology_file(TEMP_DIR)
         except FileNotFoundError:
-            print(f"[ERROR] No Excel file found in: {SOURCE_DIR}")
+            print(f"[ERROR] No Excel file found in: {TEMP_DIR}")
             return
 
         # === [2] Read and clean CSV ===

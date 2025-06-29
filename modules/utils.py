@@ -7,6 +7,7 @@ from datetime import datetime
 
 current_date = datetime.now().strftime("%Y_%m_%d")
 
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 TEMP_DIR = "temp/"
 SOURCE_DIR = "_results/"
 OUTPUT_DIR = "output/"

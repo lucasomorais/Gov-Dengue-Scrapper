@@ -11,7 +11,7 @@ from modules.utils import (
     find_latest_file_in_subfolders,
     get_latest_epidemiology_file,
     OUTPUT_DIR,
-    SOURCE_DIR
+    TEMP_DIR
 )
 
 def se_completa():
@@ -30,11 +30,11 @@ def se_completa():
 
     # === [3] Encontrar o Excel mais recente ===
     try:
-        excel_path = get_latest_epidemiology_file(SOURCE_DIR)
+        excel_path = get_latest_epidemiology_file(TEMP_DIR)
         wb = load_workbook(excel_path)
         ws = wb["SE Completa"]
     except FileNotFoundError:
-        print(f"[ERROR] Excel file not found in: {SOURCE_DIR}")
+        print(f"[ERROR] Excel file not found in: {TEMP_DIR}")
         return
     except KeyError:
         print(f"[ERROR] Sheet 'SE Completa' not found in {excel_path}")

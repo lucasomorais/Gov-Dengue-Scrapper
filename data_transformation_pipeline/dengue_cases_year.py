@@ -6,7 +6,7 @@ if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
 from modules.utils import (
-    get_latest_epidemiology_file, OUTPUT_DIR
+    get_latest_epidemiology_file, OUTPUT_DIR, TEMP_DIR
 )
 
 
@@ -49,9 +49,9 @@ def dengue_cases_year():
 
     # === [2] Locate the latest Excel epidemiology file ===
     try:
-        excel_path = get_latest_epidemiology_file("_results")
+        excel_path = get_latest_epidemiology_file(TEMP_DIR)
     except FileNotFoundError:
-        print("[ERROR] No Excel file found in _results")
+        print(f"[ERROR] No Excel file found in {TEMP_DIR}")
         return
 
     wb = load_workbook(excel_path)

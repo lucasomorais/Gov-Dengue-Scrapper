@@ -13,7 +13,7 @@ from modules.utils import (
     get_latest_epidemiology_file,
     OUTPUT_DIR,
     DENGUE_DIR,
-    SOURCE_DIR
+    TEMP_DIR
 )
 
 today_str = datetime.now().strftime("%Y_%m_%d")
@@ -150,7 +150,7 @@ def informe_semana_epidemiologica():
 
     # Step 8: Save
     today_str = datetime.now().strftime("%Y_%m_%d")
-    output_path = os.path.join(SOURCE_DIR, f"Epidemiology_Dengue_{today_str}.xlsx")
+    output_path = os.path.join(TEMP_DIR, f"Epidemiology_Dengue_{today_str}.xlsx")
     wb.save(output_path)
     print(f"✅ Excel file updated and saved to {output_path}")
 
